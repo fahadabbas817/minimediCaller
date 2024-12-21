@@ -3,7 +3,7 @@ from groq import Groq
 
 # Initialize Groq client with API key
 client = Groq(
-    api_key=os.getenv("GROQ_API_KEY", "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")
+    api_key=os.getenv("GROQ_API_KEY")
 )
 
 def ask_LLM(input_text: str, system_message: str = "You are a helpful and friendly assistant.", context: str = None):
