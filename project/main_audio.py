@@ -35,7 +35,9 @@ def speech_to_text():
             return "No response detected. Please try again."
 
 # Step 1: Generate a scenario prompt
+# feedback + user interest 
 feedback_reports = [{"session_id": 1, "issues": ["slow response time", "missed protocol steps"]}]
+
 scenario_request = trainer_agent.process_request(feedback_reports)
 scenario_prompt = scenario_request["scenario_prompt"]
 

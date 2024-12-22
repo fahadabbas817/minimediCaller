@@ -1,43 +1,35 @@
-from agents.trainer_agent import TrainerAgent
-from agents.human_bot_agent import HumanBotAgent
-from agents.feedback_report_agent import FeedbackReportGenerator
+import asyncio
+import os
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from routers import auth,users,setup
+from contextlib import asynccontextmanager
+from dotenv import load_dotenv
 
-# Initialize agents
-trainer_agent = TrainerAgent()
-human_bot_agent = HumanBotAgent()
-feedback_generator = FeedbackReportGenerator()
-
-# Step 1: Generate a scenario prompt
-feedback_reports = [{"session_id": 1, "issues": ["slow response time", "missed protocol steps"]}]
-scenario_request = trainer_agent.process_request(feedback_reports)
-scenario_prompt = scenario_request["scenario_prompt"]
-
-print("Scenario:", scenario_prompt)
-
-# Step 2: Start the conversation
-print("\nStarting conversation...\n")
-print("Bot:", human_bot_agent.initialize_conversation(scenario_prompt))
-
-# Step 3: Engage in conversation
-while True:
-    user_input = input("Distressed Caller: ")
-    if user_input.lower() in ["quit", "exit"]:
-        print("\nEnding conversation...\n")
-        break
-
-    bot_response = human_bot_agent.get_bot_response(user_input)
-    print("Bot:", bot_response)
-
-# Step 4: Retrieve full conversation logs
-conversation_logs = human_bot_agent.get_conversation_logs()
+load_dotenv()
 
 
-# Debug logs before sending to feedback generator
-print("\nDEBUG: Conversation Logs Before Feedback Generation:\n", conversation_logs)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+	# Run at startup
+	asyncio.create_task(setup.create_service())
+	yield
+	# Run on shutdown (if required)
+	print('It is shutting down...')
 
-# Generate feedback report
-feedback_report = feedback_generator.generate_feedback(conversation_logs)
+app = FastAPI(lifespan=lifespan)
 
-# Display feedback report
-print("\nFeedback Report:\n")
-print(feedback_report["feedback_report"])
+# CORS setup
+app.add_middleware(
+	CORSMiddleware,
+	allow_origins=["*"],
+	allow_credentials=True,
+	allow_methods=["*"],
+	allow_headers=["*"],
+)
+
+# Routers
+app.include_router(setup.router)
+app.include_router(auth.router)
+app.include_router(users.router)
+

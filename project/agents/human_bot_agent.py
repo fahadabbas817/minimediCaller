@@ -1,4 +1,7 @@
-from utils.llm import ask_LLM
+from utility.llm import ask_LLM
+
+
+# human >> speech to text >> initialize_conversation >> bot >> text >> text to speech >> frontend >> Stop >> feedback >> ui
 
 class HumanBotAgent:
     def __init__(self, name="HumanBotAgent"):
