@@ -95,7 +95,7 @@ function SimulationModule() {
   return (
     <div className=" container mx-auto mt-10">
       <h1 className="text-3xl text-gray-200 font-bold text-center mt-10">
-        Simulation
+        Simulator
       </h1>
 {/* Card selection displayer */}
       {!isSimulationActive && (

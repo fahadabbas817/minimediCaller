@@ -1,9 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { DispatchContext } from '@/Context/ContextAPI';
 
 function Dashboard() {
+  const navigate = useNavigate()
+  const {isAuthenticated,setIsAuthenticated } = useContext(DispatchContext);
+
+  useEffect(() => {
+    // Check localStorage for saved authentication state
+    const authToken = localStorage.getItem('authToken');
+    setIsAuthenticated(!!authToken);
+    isAuthenticated?navigate('/'):navigate('/login')
+  }, []);
   return (
     <div className="container mx-auto mt-10 space-y-10">
       <h1 className="text-3xl font-bold text-center text-gray-200">Welcome, Dispatcher</h1>
