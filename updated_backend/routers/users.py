@@ -15,7 +15,7 @@ from uuid import uuid4
 import bcrypt
 import json
 from threading import Thread
-
+from agents.trainer_agent import TrainerAgent
 
 
 logging.basicConfig(level=logging.INFO,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -25,6 +25,8 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/users", tags=["Users"])
 
 
+## Initialize the Trainer Agent
+trainer_agent=TrainerAgent()
 # def hash_password(password: str) -> str:
 #     """Hash a plaintext password."""
 #     salt = bcrypt.gensalt()
@@ -74,9 +76,16 @@ async def signup(signup_request:SignupRequest):
         cursor.close()
         connection.close()
 
-ALLOWED_DOMAINS = {"hr", "finance", "marketing", "it", "legal","R&D"} 
 
-@router.get("/domains/", response_model=List[str],dependencies=[Depends(JWTBearer())])
-def get_allowed_domains():
+@router.post("/generate_scenario",dependencies=[Depends(JWTBearer())])
+def generate_scenario(scenario_request:GenerateScenario):
     """Fetch the list of allowed domains."""
-    return list(ALLOWED_DOMAINS)
+    try:
+        emergency_type=scenario_request.emergency_type
+        feedback_reports=None
+        scenario=trainer_agent.process_request(emergency_type,feedback_reports)
+        return JSONResponse(content=scenario, status_code=201)
+    except Exception as e:
+        return JSONResponse(content=f"Generate Scenario :: Bad Request {e}", status_code=400)
+        
+    

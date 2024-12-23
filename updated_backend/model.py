@@ -14,3 +14,6 @@ class LoginRequest(BaseModel):
 class LoginResponse(BaseModel):
     access_token: str
     token_type: str
+
+class GenerateScenario(BaseModel):
+    emergency_type: str

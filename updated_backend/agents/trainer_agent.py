@@ -1,5 +1,6 @@
 from utility.llm import ask_LLM
 
+
 class TrainerAgent:
     def __init__(self, name="TrainerAgent"):
         self.name = name
