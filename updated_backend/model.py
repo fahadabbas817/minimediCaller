@@ -17,3 +17,4 @@ class LoginResponse(BaseModel):
 
 class GenerateScenario(BaseModel):
     emergency_type: str
+    email: str

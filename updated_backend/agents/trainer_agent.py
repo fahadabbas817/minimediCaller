@@ -74,7 +74,7 @@ class TrainerAgent:
                 "callers_location: str | caller's location,
                 "callers_emergency_type: str | emergency type of caller,
                 "scenario_title": str | scenario title outline,
-                "scenario: str | A short, **2-3 paragraph** narrative describing the setting, the caller's emotional state, address and the situation that prompts the call"
+                "scenario: str | A short, crisp and precise, **2-3 paragraph** narrative describing the setting, the caller's emotional state, address and the situation that prompts the call."
 
                 """
 

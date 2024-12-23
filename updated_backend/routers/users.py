@@ -2,7 +2,7 @@ from services.sql_connection import sql_connect,check_and_create_user_table
 from utility.auth_helper import encrypt_password
 from utility.auth_bearer import JWTBearer
 from model import *
-
+import ast, re
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException, Depends
 from fastapi import FastAPI, Depends, HTTPException, status, APIRouter
 from fastapi.responses import JSONResponse
@@ -16,7 +16,6 @@ import bcrypt
 import json
 from threading import Thread
 from agents.trainer_agent import TrainerAgent
-
 
 logging.basicConfig(level=logging.INFO,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -81,11 +80,24 @@ async def signup(signup_request:SignupRequest):
 def generate_scenario(scenario_request:GenerateScenario):
     """Fetch the list of allowed domains."""
     try:
+        conn = sql_connect()
+        cursor = conn.cursor()
         emergency_type=scenario_request.emergency_type
-        feedback_reports=None
+        email = scenario_request.email
+        cursor.execute("SELECT feedback_generated FROM metadata WHERE email = ?", (email,))
+        result = cursor.fetchone()
+
+        if result:
+            feedback_reports = ast.literal_eval(re.findall(r'{.*?}', result[0], re.DOTALL)[0])['keyphrases_feedback']  # Assuming feedback_generated is the first column in the SELECT query 
+        else:
+            feedback_reports = None  # Handle case where no record is found
         scenario=trainer_agent.process_request(emergency_type,feedback_reports)
-        return JSONResponse(content=scenario, status_code=201)
+        print("Scenarioooooooo: ", scenario)
+        return JSONResponse(content=json.loads(re.findall(r'{.*?}', scenario['scenario_prompt'], re.DOTALL)[0]), status_code=201)
     except Exception as e:
         return JSONResponse(content=f"Generate Scenario :: Bad Request {e}", status_code=400)
+    finally:
+        cursor.close()
+        conn.close()
         
     
