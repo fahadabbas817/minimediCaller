@@ -1,7 +1,5 @@
 import sqlite3
 
-import sqlite3
-
 def sql_connect():
     # Connect to the database (or create it if it doesn't exist)
     conn = sqlite3.connect('mydatabase.db')
@@ -45,7 +43,42 @@ def check_and_create_user_table():
         cursor.close()
         conn.close()
 
+def check_and_create_metadata_table():
+    """
+    Check if a table exists in the SQLite database. If not, create it.
 
+    Args:
+        db_path (str): Path to the SQLite database file.
+        table_name (str): Name of the table to check/create.
+    """
+    # Define the table schema (modify as needed)
+    create_table_query = """CREATE TABLE IF NOT EXISTS metadata (
+    email TEXT UNIQUE NOT NULL,
+    simulation_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    conversation_logs TEXT,
+    feedback_generated TEXT;"""
+
+    # Connect to the SQLite database
+    conn =sql_connect()
+    cursor = conn.cursor()
+    try:
+        # Check if the table exists
+        cursor.execute(f"SELECT email FROM sqlite_master WHERE type='table' AND name='metadata';")
+        table_exists = cursor.fetchone()
+
+        if table_exists:
+            print(f"Table metadata already exists.")
+        else:
+            # Create the table if it does not exist
+            cursor.execute(create_table_query)
+            conn.commit()
+            print(f"Table metadata has been created.")
+    except sqlite3.Error as e:
+        print(f"check_and_create_metadata_table- Error occurred: {e}")
+    finally:
+        # Close the connection
+        cursor.close()
+        conn.close()
 # item = {
 # 						'id': str(file_id),
 # 						'file_name': file_name,

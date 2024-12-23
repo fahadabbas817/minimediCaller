@@ -53,6 +53,7 @@ class FeedbackReportGenerator:
             "'Negative_aspects': 'negative aspects of how the dispatcher handled the call'"
             "'Feedback': 'constructive feedback for improvement'"
             "'Overall_rating': 'overall rating of how the dispatcher handled the call'"
+            "'keyphrases_feedback': 'list of issues based on the dispatcher performance. for e.g. [slow response time, missed critical protocol steps, lack of empathy]'"
             "\n"
             "The output MUST BE WITHIN CURLY BRACKETS FOLLOWING JSON FORMAT."
           
