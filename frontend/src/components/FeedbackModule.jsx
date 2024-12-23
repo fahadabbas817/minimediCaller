@@ -22,14 +22,14 @@ function FeedbackModule() {
 
   return (
     <div className="container mx-auto mt-10 space-y-8">
-      <h1 className="text-3xl font-bold">Feedback</h1>
-      <Table>
+      <h1 className="text-3xl font-bold text-center text-gray-200">Feedback</h1>
+      <Table className='text-gray-300'>
         <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Timestamp</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead>Actions</TableHead>
+          <TableRow className='text-gray-300'>
+            <TableHead className='text-gray-300' >Name</TableHead>
+            <TableHead className='text-gray-300'>Timestamp</TableHead>
+            <TableHead className='text-gray-300'>Type</TableHead>
+            <TableHead className='text-gray-300'>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

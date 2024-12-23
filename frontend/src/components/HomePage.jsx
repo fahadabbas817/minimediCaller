@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function HomePage() {
   return (
-    <div className="space-y-8 container mx-auto mt-10">
+    <div className="space-y-10 container mx-auto mt-10">
       <h1 className="text-4xl font-bold text-center mb-8">Welcome to Emergency Dispatcher Training</h1>
       <Card>
         <CardHeader>

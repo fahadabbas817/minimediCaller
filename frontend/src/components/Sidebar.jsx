@@ -29,7 +29,7 @@
 
     return (
       <div className={cn(
-        "flex flex-col h-screen bg-teal-500 text-white transition-all duration-300 px-1",
+        "flex flex-col h-screen bg-teal-800 shadow-lg text-white transition-all duration-300 px-2",
         collapsed ? "w-16" : "w-64"
       )}>
         <div className="flex items-center justify-end p-4">

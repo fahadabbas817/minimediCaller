@@ -9,6 +9,7 @@ import FeedbackModule from './components/FeedbackModule';
 import SimulationResults from './components/SimulationResults';
 import FeedbackAnalysis from './components/FeedbackAnalysis';
 import ReportingDashboard from './components/ReportingDashboard';
+import Header from './components/Header';
 
 function App() {
   // This would typically come from your authentication state
@@ -17,8 +18,9 @@ function App() {
   return (
     <Router>
       <div className="flex h-screen bg-gradient-to-br from-blue-100 to-purple-100">
-        {isAuthenticated && <Sidebar />}
-        <main className="flex-1 overflow-y-auto bg-gradient-to-r  from-teal-300 to-teal-600">
+        {/* {isAuthenticated && <Sidebar />} */}
+        <main className="flex-1 overflow-y-auto bg-gradient-to-r from-emerald-500 to-emerald-900">
+          <Header/>
           <Routes>
             <Route path="/auth" element={<AuthPage />} />
             <Route

@@ -22,8 +22,8 @@ function ReportingDashboard() {
   ];
 
   return (
-    <div className="container mx-auto p-4 space-y-8">
-      <h1 className="text-3xl font-bold">Reporting Dashboard</h1>
+    <div className="container mx-auto mt-10 space-y-8 mb-10">
+      <h1 className="text-3xl font-bold text-center text-gray-200">Reporting Dashboard</h1>
       <Card>
         <CardHeader>
           <CardTitle>Performance Trend</CardTitle>
