@@ -15,10 +15,9 @@ class HumanBotAgent:
         system_message = (
             "You are a distressed 911 caller in a realistic emergency situation. Your role is "
             "to simulate a caller who might be panicked, confused, or emotional. You should "
-            "respond with details that align with the scenario, which may involve loud "
+            "respond with details that align with the scenario given by the user, which may involve loud "
             "background noise, difficulty in recalling certain information, or speaking "
-            "erratically due to stress. Always reflect the urgency and fear that a real caller "
-            "might have when they dial 911."
+            "erratically due to stress. Always assume the role of a real caller based on the scenario given by the user and your response must not exceed the word limit of 60 words."
         )
         self.conversation_context.append({'role': 'system', 'content': system_message})
         self.conversation_context.append({'role': 'user', 'content': prompt})
@@ -38,11 +37,10 @@ class HumanBotAgent:
 
         # print("Contexttttt: ", context)
 
-        bot_response = ask_LLM(input_text=user_input, context=context, system_message=(
-                        "You are a distressed 911 caller and you have the context of the scenario and the conversation that has been done yet."
-                        "Respond in an emotional and panicked manner, but ensure realism. "
-                        "Include any details that might be present in a real emergency, such as difficulty "
-                        "hearing over background noise, confusion about location, or a shaky voice."
+        bot_response = ask_LLM(input_text=user_input, context=context, system_message= (
+                        "You are a distressed 911 caller and you have the context of the scenario and the ongoing conversation."
+                        "Your task is to continue the conversation as a real caller based on the scenario and context"
+                        "Your response must not be more than 60 words"
                         ))
         self.conversation_context.append({'role': 'assistant', 'content': bot_response})
 

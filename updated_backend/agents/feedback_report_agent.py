@@ -38,24 +38,24 @@ class FeedbackReportGenerator:
         # Build a string that includes the core dispatcher skills
         skills_text = "\n".join([f"- {skill}" for skill in core_dispatcher_skills])
 
-        # Incorporate the core dispatcher skills into the LLM prompt
         input_text = (
             "Analyze the following 911 dispatcher conversation logs:\n\n"
             f"{formatted_logs}\n\n"
             "You are an expert trainer and must provide a rigorous feedback report, focusing on:\n"
-            "1. Positive aspects of how the dispatcher handled the call.\n"
-            "2. Critical steps or questions that were missed (location, phone number, victim's condition).\n"
-            "3. Communication and empathy: how did the dispatcher handle the caller's emotional state?\n"
-            "4. Specific examples with direct quotes from the logs (if available).\n"
-            "5. Concrete improvement suggestions, including recommended phrases or actions.\n"
-            "6. Overall performance rating (on a scale of 1 to 10, with reasoning).\n\n"
-            "Additionally, evaluate the dispatcher’s performance in each of the following skill areas:\n"
             f"{skills_text}\n\n"
-            "Ensure you:\n"
-            "- Cite at least two direct quotes from the conversation.\n"
-            "- Explain why each missed step is important in real emergencies.\n"
-            "- Provide at least two areas the dispatcher excelled at.\n"
-            "Use specific references to the conversation logs wherever possible."
+            "The output must be only in JSON Format with following keys:\n"
+            "'Situation_Assessment_&_Triage_score': 'score out of 10'"
+            "'Protocol_Adherence_Checklist_Usage_score': 'score out of 10'"
+            "'Emotional_Intelligence_&_Caller_Management_score': 'score out of 10'"
+            "'Adaptive_Thinking_&_Scenario_Flexibility_score': 'score out of 10'"
+            "'Communication_Skills_score': 'score out of 10'"
+            "'Positive_aspects': 'positive aspects of how the dispatcher handled the call.'"
+            "'Negative_aspects': 'negative aspects of how the dispatcher handled the call'"
+            "'Feedback': 'constructive feedback for improvement'"
+            "'Overall_rating': 'overall rating of how the dispatcher handled the call'"
+            "\n"
+            "The output MUST BE WITHIN CURLY BRACKETS FOLLOWING JSON FORMAT."
+          
         )
 
         system_message = "You are an expert trainer analyzing 911 dispatcher conversations."
