@@ -1,4 +1,4 @@
-import React, { useState,useContext } from 'react';
+import React, { useState,useContext,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -12,6 +12,12 @@ const [email, setEmail] = useState('')
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+    useEffect(() => {
+      // Check localStorage for saved authentication state
+      const authToken = localStorage.getItem('authToken');
+      setIsAuthenticated(!!authToken);
+      isAuthenticated?navigate('/'):navigate('/login')
+    }, []);
 
 
    // React Query Mutation for Login
