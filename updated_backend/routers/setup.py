@@ -26,7 +26,7 @@ async def create_service():
          email TEXT UNIQUE NOT NULL,
          simulation_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
          conversation_logs TEXT,
-         feedback_generated TEXT;"""
+         feedback_generated TEXT);"""
 
         try:
            cursor.execute(create_table_query)
