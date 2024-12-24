@@ -102,29 +102,6 @@ Below is a high-level architecture of how everything fits together:
 
 ---
 
-## The `app.py` Script
-The **entry point** (`app.py`) ties everything together:
-
-1. **Step 1**: Import and initialize the agents.  
-2. **Step 2**: Call `TrainerAgent.process_request()` to **generate a scenario**.  
-3. **Step 3**: Pass this scenario to `HumanBotAgent.initialize_conversation()`, which simulates the caller’s first response.  
-4. **Step 4**: **User** (dispatcher) interacts in a loop. Type your questions/commands; the AI (caller) replies.  
-   - Exit the loop by typing “quit,” “exit,” or “bye.”  
-5. **Step 5**: Retrieve the conversation logs from `HumanBotAgent.get_conversation_logs()`.  
-6. **Step 6**: Pass logs to `FeedbackReportGenerator.generate_feedback()`.  
-7. **Step 7**: Print out or store the feedback report.
-
-A typical run looks like:
-
-```
-python app.py
-```
-
-- The script prints the scenario, then starts the interactive conversation.  
-- Once the conversation ends, it shows the final feedback report.
-
----
-
 ## Installation & Setup
 
 1. **Clone the Repository**  
@@ -215,10 +192,10 @@ You may want to add a license (e.g., MIT, Apache 2.0) to clarify usage rights.
 ## Contact / Contributing
 *(Optional)*  
 - **Contact**: If you have questions or suggestions, reach out to:
-   - Rahul Singh
-   - Sanket Bodake
-   - Puroshotam Singh
-   - Fahad Abbas
+   - [Rahul Singh](https://www.linkedin.com/in/rahulsinghds/)
+   - [Sanket Bodake](https://www.linkedin.com/in/sanket-b-3ab030245/)
+   - [Puroshotam Singh](https://www.linkedin.com/in/puroshotam-singh/)
+   - [Fahad Abbas](https://www.linkedin.com/in/fahadabbas-3042b0212/)
 - **Contributions**: PRs are welcome! Fork the repo, add features, and open a pull request.
 
 ---
