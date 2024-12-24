@@ -16,6 +16,8 @@ import bcrypt
 import json
 from threading import Thread
 from agents.trainer_agent import TrainerAgent
+from agents.human_bot_agent import HumanBotAgent
+from agents.feedback_report_agent import FeedbackReportGenerator
 
 logging.basicConfig(level=logging.INFO,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -26,6 +28,8 @@ router = APIRouter(prefix="/users", tags=["Users"])
 
 ## Initialize the Trainer Agent
 trainer_agent=TrainerAgent()
+human_bot_agent = HumanBotAgent()
+feedback_generator = FeedbackReportGenerator()
 # def hash_password(password: str) -> str:
 #     """Hash a plaintext password."""
 #     salt = bcrypt.gensalt()
@@ -92,12 +96,54 @@ def generate_scenario(scenario_request:GenerateScenario):
         else:
             feedback_reports = None  # Handle case where no record is found
         scenario=trainer_agent.process_request(emergency_type,feedback_reports)
-        print("Scenarioooooooo: ", scenario)
+        print(scenario['scenario_prompt'])
         return JSONResponse(content=json.loads(re.findall(r'{.*?}', scenario['scenario_prompt'], re.DOTALL)[0]), status_code=201)
     except Exception as e:
         return JSONResponse(content=f"Generate Scenario :: Bad Request {e}", status_code=400)
     finally:
         cursor.close()
         conn.close()
-        
+
+@router.post("/convers",dependencies=[Depends(JWTBearer())])
+def generate_conversation(convers_request:GenerateConversation):
+    """Fetch the list of allowed domains."""
+    try:
+        scenario = convers_request.scenario
+        dispatcher_text = convers_request.dispatcher_text
+        conv_history = convers_request.conv_history
+
+        bot_response = human_bot_agent.get_bot_response(dispatcher_text, scenario, conv_history)
+        return JSONResponse(content=bot_response, status_code=201)
+
+    except Exception as e:
+        return JSONResponse(content=f"Generate Conversation :: Bad Request {e}", status_code=400)
     
+        
+@router.post("/feedback",dependencies=[Depends(JWTBearer())])
+def generate_feedback(feedback_request:GenerateFeedback):
+    """Fetch the list of allowed domains."""
+    try:
+        conn = sql_connect()
+        cursor = conn.cursor()
+        # Generate feedback report
+        feedback_report = feedback_generator.generate_feedback(feedback_request.conv_logs)
+
+        try:
+            report = re.findall(r'{.*?}', feedback_report['feedback_report'], re.DOTALL)
+            report = json.loads(report[0])
+        except Exception as e:
+            print("Exception raised during fetching Json format of feedback report: ", e)
+            report = feedback_report['feedback_report']
+
+        insert_query = """
+        INSERT INTO metadata (email, conversation_logs, feedback_generated)
+        VALUES (?, ?, ?);
+        """
+        cursor.execute(insert_query, (feedback_request.email, str(feedback_request.conv_logs), str(report)))
+        conn.commit()
+        return JSONResponse(content=report, status_code=201)
+    except Exception as e:
+        return JSONResponse(content=f"Generate Feedback :: Bad Request {e}", status_code=400)
+    finally:
+        cursor.close()
+        conn.close()   

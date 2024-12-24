@@ -31,16 +31,16 @@ class FeedbackReportGenerator:
         print("\nDEBUG: Conversation Logs Passed to Feedback Generator:\n", conversation_logs)
         
         # Format logs into a readable format for the LLM
-        formatted_logs = "\n".join(
-            [f"{msg['role'].capitalize()}: {msg['content']}" for msg in conversation_logs]
-        )
+        # formatted_logs = "\n".join(
+        #     [f"{msg['role'].capitalize()}: {msg['content']}" for msg in conversation_logs]
+        # )
 
         # Build a string that includes the core dispatcher skills
         skills_text = "\n".join([f"- {skill}" for skill in core_dispatcher_skills])
 
         input_text = (
             "Analyze the following 911 dispatcher conversation logs:\n\n"
-            f"{formatted_logs}\n\n"
+            f"{conversation_logs}\n\n"
             "You are an expert trainer and must provide a rigorous feedback report, focusing on:\n"
             f"{skills_text}\n\n"
             "The output must be only in JSON Format with following keys:\n"

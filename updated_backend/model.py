@@ -18,3 +18,12 @@ class LoginResponse(BaseModel):
 class GenerateScenario(BaseModel):
     emergency_type: str
     email: str
+    
+class GenerateConversation(BaseModel):
+    scenario: str
+    dispatcher_text: str
+    conv_history: list[dict]
+
+class GenerateFeedback(BaseModel):
+    email: str
+    conv_logs: str

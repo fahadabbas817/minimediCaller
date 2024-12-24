@@ -23,7 +23,7 @@ async def create_service():
 
         # Define the table schema (modify as needed)
         create_table_query = """CREATE TABLE IF NOT EXISTS metadata (
-         email TEXT UNIQUE NOT NULL,
+         email TEXT NOT NULL,
          simulation_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
          conversation_logs TEXT,
          feedback_generated TEXT);"""
