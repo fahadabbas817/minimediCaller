@@ -18,23 +18,8 @@ export const loginService = async (credentials) => {
         const response = await apiClient.post('/login', credentials);
         return response.data;
 };
-// Scenario Service
-export const scenarioService = async (scenarioData) => {
-    const response = await apiClient.post('/scenarios/create', scenarioData);
-    return response.data;
-  };
+
   
-  // Bot Response Service
-  export const botResponseService = async (message) => {
-    const response = await apiClient.post('/bot/response', { message });
-    return response.data;
-  };
-  
-  // Feedback Service: Submits user feedback
-  export const feedbackService = async (feedbackData) => {
-    const response = await apiClient.post('/feedback', feedbackData);
-    return response.data;
-  };
   
   // Free API: Get Random Data for Testing
   export const getRandomData = async () => {

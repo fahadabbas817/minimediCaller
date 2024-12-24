@@ -6,8 +6,14 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { loginService } from '@/api/authApi';
 import { DispatchContext } from '@/Context/ContextAPI';
+import { useAppStore } from '@/Context/Zustand';
 function Login() {
-     const { input, isAuthenticated,setIsAuthenticated } = useContext(DispatchContext);
+    //  const { input, isAuthenticated,setIsAuthenticated, token,setToken,userEmail,setUserEmail } = useContext(DispatchContext);
+       const isAuthenticated = useAppStore((state)=>state.isAuthenticated)
+       const setIsAuthenticated  = useAppStore((state)=>state.setIsAuthenticated )
+       const setUserEmail = useAppStore((state)=>state.setUserEmail)
+       const setToken = useAppStore((state)=>state.setToken)
+
 const [email, setEmail] = useState('')
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -26,12 +32,15 @@ const [email, setEmail] = useState('')
     try {
       const data = await loginService({ email, password });
       console.log('Login successful:', data);
-      localStorage.setItem('authToken', data.access_token); // Save token or other data in localStorage
+      localStorage.setItem('authToken', data.access_token);
+      setToken(data.access_token) 
+      setUserEmail(email)
+      localStorage.setItem('usermail', email);
       setIsAuthenticated(true)
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
-    }
+   }
   };
 
 

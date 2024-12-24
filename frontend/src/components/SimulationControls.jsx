@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Mic, MicOff } from 'lucide-react';
+import { Mic, MicOff, PhoneCall, PhoneOff } from 'lucide-react';
+import chatbot from '@/assets/chatbot.jpg'
+import userImg from '@/assets/user.jpg'
 
 export function SimulationControls({
   isSimulationActive,
@@ -10,48 +12,85 @@ export function SimulationControls({
   onMicToggle,
   onEndSimulation
 }) {
-  if (!isSimulationActive) {
-    return (
-      <div className='flex justify-'>
-      <Button className='p-8 text-xl bg-gray-200 text-teal-900 hover:bg-white/40 transition-all ease-in duration-100 w-fit rounded-full' onClick={onStartSimulation} variant="outline">
-        Start Simulation
-      </Button>
-      </div>
-    );
-  }
-
+ 
+if(isSimulationActive){
   return (
-    <>
-    <div className="flex justify-between">
-      <Button
-        onClick={onMicToggle}
-        variant="outline"
-        disabled={isBotSpeaking}
-        className={`flex items-center space-x-2 ${
-          isUserSpeaking ? "bg-red-100" : ""
-        }`}
-      >
-        {isUserSpeaking ? <Mic className="h-4 w-4 text-red-500" /> : <Mic className="h-4 w-4" />}
-        <span>{isUserSpeaking ? "Stop Speaking" : "Dispatcher"}</span>
-      </Button>
-      <Button
-        onClick={onMicToggle}
-        variant="outline"
-        disabled={isUserSpeaking}
-        className={`flex items-center space-x-2 ${
-          isBotSpeaking ? "bg-red-100" : ""
-        }`}
-      >
-        {isBotSpeaking ? <Mic className="h-4 w-4 text-red-500" /> : <Mic className="h-4 w-4" />}
-        <span>{isBotSpeaking ? "Stop Speaking" : "ChatBot"}</span>
-      </Button>
-    </div>
-    <div className='flex justify-center'>
-      <Button className='p-8 text-lg w-max rounded-full' onClick={onEndSimulation} variant="outline">
-        End Simulation
-      </Button>
+    <div className="flex flex-col mt-10 space-y-20 h-screen">
+      <h1 className='text-xl md:text-3xl font-semibold text-gray-200'>Simulator Conversation</h1>
+      <div className="flex justify-center space-x-2 md:space-x-60">
+        {/* Dispatcher Card */}
+        <div
+          className={`w-80 h-64 bg-gradient-to-r from-white/60 to-white/40 shadow-md rounded-3xl flex flex-col items-center justify-center transition-all duration-300 relative cursor-pointer overflow-hidden ${
+            isBotSpeaking ? "opacity-50 pointer-events-none" : ""
+          }`}
+          onClick={onMicToggle}
+        >
+          <div className="absolute top-4 right-4 z-20">
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-full bg-white/80 hover:bg-white"
+              onClick={(e) => {
+                e.stopPropagation();
+                onMicToggle();
+              }}
+            >
+              {isUserSpeaking ? (
+                <Mic className="h-4 w-4 text-red-500" />
+              ) : (
+                <MicOff className="h-4 w-4" />
+              )}
+            </Button>
+          </div>
+          <div className="relative w-24 h-24 md:w-40 md:h-40">
+            {isUserSpeaking && (
+              <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 rounded-full bg-gray-100 opacity-75 animate-ping-slow"></div>
+                <div className="absolute inset-0 rounded-full bg-gray-100 opacity-50 animate-ping-slow animation-delay-300"></div>
+                <div className="absolute inset-0 rounded-full bg-gray-100 opacity-25 animate-ping-slow animation-delay-600"></div>
+              </div>
+            )}
+            <img
+              src={userImg}
+              alt="Dispatcher"
+              className="relative z-10 h-full w-full rounded-full object-cover border-2 border-gray-300"
+            />
+          </div>
+        </div>
+
+        {/* ChatBot Card */}
+        <div
+          className="w-80 h-64 overflow-hidden bg-gradient-to-r  from-white/60 to-white/40 shadow-md rounded-3xl flex flex-col items-center justify-center transition-all duration-300"
+        >
+          <div className="relative w-24 h-24 md:w-40 md:h-40 mb-4 ">
+            {isBotSpeaking && (
+              <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 rounded-full bg-green-300 opacity-75 animate-ping-slow"></div>
+                <div className="absolute inset-0 rounded-full bg-green-300 opacity-50 animate-ping-slow animation-delay-300"></div>
+                <div className="absolute inset-0 rounded-full bg-green-300 opacity-25 animate-ping-slow animation-delay-600"></div>
+              </div>
+            )}
+            <img
+              src={chatbot}
+              alt="ChatBot"
+              className="relative z-10 w-full h-full rounded-full object-cover border-2 border-gray-300"
+            />
+          </div>
+        
+        </div>
       </div>
-    </>
+      <div className='flex justify-center'>
+        <Button
+          className='p-6 text-lg w-max rounded-full flex items-center space-x-2 mt-4'
+          onClick={onEndSimulation}
+          variant="outline"
+        >
+          <PhoneOff className="h-5 w-5 text-red-500" />
+          <span className='text-red-500'>End Simulation</span>
+        </Button>
+      </div>
+    </div>
   );
+}
 }
 

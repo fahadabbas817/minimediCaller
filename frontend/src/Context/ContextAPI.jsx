@@ -1,12 +1,19 @@
-import { createContext,useState } from "react";
+import { createContext,useEffect,useState } from "react";
 // import runChat from "../../config/geminiapi";
 
 
 export const DispatchContext = createContext();
 
+
+
 const ContextProvider = (props)=>{
     const [input,setInput]= useState('Context API setup');
     const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [userEmail, setUserEmail] = useState('')
+    const [token, setToken] = useState('')
+    const [selectedScenario, setSelectedScenario] = useState(null);
+     const [scenario, setScenario] = useState({})
+       const [isSimulationActive, setIsSimulationActive] = useState(false);
 //     const [loading, setLoading] = useState(false);
 //     const [result,setResult]= useState('');
 
@@ -146,6 +153,17 @@ const ContextProvider = (props)=>{
 //         }
 //       };
       
+  useEffect(() => {
+      // Check localStorage for saved authentication state
+      const authToken = localStorage.getItem('authToken');
+      setToken(authToken)
+      const usermail = localStorage.getItem('usermail')
+      setUserEmail(usermail)
+      setIsAuthenticated(!!authToken);
+
+    }, []);
+
+
     const contextValue = {
       // extend, setExtend,
       // isOpen, setIsOpen,
@@ -161,7 +179,7 @@ const ContextProvider = (props)=>{
       //   recentPrompt,setRecentPrompt,
       //   showResult, setshowResult,
       //   newChatbtn,
-      input,isAuthenticated,setIsAuthenticated
+      input,isAuthenticated,setIsAuthenticated,token,setToken,userEmail,setUserEmail,selectedScenario, setSelectedScenario,scenario, setScenario,isSimulationActive, setIsSimulationActive
     }
     return(
 

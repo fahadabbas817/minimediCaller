@@ -3,10 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { DispatchContext } from '@/Context/ContextAPI';
+import { useAppStore } from '@/Context/Zustand';
+import Contributors from './Contributors';
 
 function Dashboard() {
   const navigate = useNavigate()
-  const {isAuthenticated,setIsAuthenticated } = useContext(DispatchContext);
+  // const {isAuthenticated,setIsAuthenticated } = useContext(DispatchContext);
+    const isAuthenticated = useAppStore((state)=>state.isAuthenticated)
+    const setIsAuthenticated  = useAppStore((state)=>state.setIsAuthenticated )
+   
 
   useEffect(() => {
     // Check localStorage for saved authentication state
@@ -51,6 +56,7 @@ function Dashboard() {
           <p>Areas for Improvement: Response Time, Protocol Adherence</p>
         </CardContent>
       </Card>
+      <Contributors/>
     </div>
   );
 }

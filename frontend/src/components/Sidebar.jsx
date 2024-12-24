@@ -58,15 +58,15 @@ export function Sidebar() {
       </div>
 
       {/* Menu Icon */}
-      <div className="fixed top-4 right-4 z-60">
+      <div className="fixed top-4 right-4">
         {collapsed && (
           <Button 
             variant="ghost" 
             size="icon"
             onClick={() => setCollapsed(false)}
-            className="text-white hover:bg-white/80 hover:text-teal-900 "
+            className="text-white mt-2 bg-black/30  h-10 w-10 rounded-md hover:bg-white/80 hover:text-teal-900 "
           >
-            <Menu className='h-8 w-8 mt-6' />
+            <Menu className='h-8 w-8 ' />
           </Button>
         )}
       </div>

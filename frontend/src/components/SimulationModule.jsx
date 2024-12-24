@@ -1,22 +1,43 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { ScenarioSelection } from "./ScenarioSelection";
 import { SimulationTranscript } from "./SimulationTranscript";
 import { SimulationControls } from "./SimulationControls";
 import SimulationResults from "./SimulationResults";
-import { getRandomData } from "@/api/authApi";
+import { scenarioService } from "@/api/scenarioApi";
 import Loader from "./Loader";
+import { DispatchContext } from "@/Context/ContextAPI";
+import { useAppStore } from "@/Context/Zustand";
 
 function SimulationModule() {
-  const [isSimulationActive, setIsSimulationActive] = useState(false);
+  // const { userEmail,token,selectedScenario, setSelectedScenario,scenario, setScenario,isSimulationActive, setIsSimulationActive } = useContext(DispatchContext);
+    const scenario = useAppStore((state)=>state.scenario)
+    const selectedScenario  = useAppStore((state)=>state.selectedScenario)
+    const userEmail = useAppStore((state)=>state.userEmail)
+    const setSelectedScenario = useAppStore((state)=>state.setSelectedScenario)
+    const setScenario = useAppStore((state)=>state.setScenario)
+    const isSimulationActive = useAppStore((state)=>state.isSimulationActive)
+    const setIsSimulationActive = useAppStore((state)=>state.setIsSimulationActive)
+    const token = useAppStore((state)=>state.token)
+    const userResponse = useAppStore((state)=>state.userResponse)
+    const setUserResponse = useAppStore((state)=>state.setUserResponse)
+    const botResponse = useAppStore((state)=>state.botResponse)
+    const setBotResponse = useAppStore((state)=>state.setBotResponse)
+
   const [transcript, setTranscript] = useState("");
   const [isBotSpeaking, setIsBotSpeaking] = useState(false);
   const [isUserSpeaking, setIsUserSpeaking] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [selectedScenario, setSelectedScenario] = useState(null);
   const [userInput, setUserInput] = useState("");
 
   const recognitionRef = useRef(null);
   const synthRef = useRef(null);
+  const controlsRef = useRef(null);
+ 
+// function to scroll smooothly to avatar
+const scrollToControls = () => {
+  controlsRef.current?.scrollIntoView({ behavior: 'smooth' });
+};
+
 
   useEffect(() => {
     if (typeof window !== "undefined" && "webkitSpeechRecognition" in window) {
@@ -49,13 +70,12 @@ function SimulationModule() {
   const handleScenarioSelection = async (scenario) => {
     setSelectedScenario(scenario);
     setLoading(true);
-    try {
-      const data = await getRandomData({ scenario });
-      console.log(data[0]?.body);
 
-      setTranscript(
-        `Selected Scenario: ${scenario}\n\nChatbot: ${data[0]?.body}`
-      );
+    try {
+      const data = await scenarioService(token,userEmail,scenario);
+      console.log(data)
+
+      setScenario(data);
       setLoading(false);
       // speakBotMessage(data[0]?.body);
     } catch (error) {
@@ -66,6 +86,7 @@ function SimulationModule() {
 
   const handleStartSimulation = () => {
     setIsSimulationActive(true);
+    scrollToControls()
     speakBotMessage("What's the nature of your emergency?");
   };
 
@@ -123,12 +144,24 @@ function SimulationModule() {
       ) : loading ? (
         <Loader />
       ) : (
-        <div className="mt-10 flex flex-col gap-8">
-          <SimulationTranscript
-            transcript={transcript}
+        <div className="mt-10 gap-8">
+          {transcript.scenario_title?<SimulationTranscript
+            setSelectedScenario={setSelectedScenario}
+            onStartSimulation={handleStartSimulation}
+            isSimulationActive={isSimulationActive}
+            transcript={scenario}
             isBotSpeaking={isBotSpeaking}
             isUserSpeaking={isUserSpeaking}
-          />
+            
+          /> : <div className="container mx-auto text-xl font-bold text-black-500">
+          Something went wrong try refreshing or logging in again
+        </div>}
+    <div className="h-[85vh]" ref={controlsRef}>
+    {/* if(!transcript.scenario_title){
+    return <div className="container mx-auto text-xl font-bold text-red-500">
+      Something went wrong try refreshing or logging in again
+    </div>
+  } */}
           <SimulationControls
             isSimulationActive={isSimulationActive}
             isBotSpeaking={isBotSpeaking}
@@ -137,6 +170,7 @@ function SimulationModule() {
             onMicToggle={handleMicToggle}
             onEndSimulation={handleEndSimulation}
           />
+          </div>
         </div>
       )}
     </div>

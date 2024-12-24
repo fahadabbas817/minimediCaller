@@ -18,13 +18,22 @@ import Header from "./components/Header";
 import { DispatchContext } from "./Context/ContextAPI";
 import Signup from "./components/Signup";
 import Login from "./components/login";
+import { useAppStore } from "./Context/Zustand";
 
 function App() {
-
-  const { isAuthenticated,setIsAuthenticated } = useContext(DispatchContext);
+  const isAuthenticated = useAppStore((state)=>state.isAuthenticated)
+  const setIsAuthenticated  = useAppStore((state)=>state.setIsAuthenticated )
+  const setUserEmail = useAppStore((state)=>state.setUserEmail)
+  const setToken = useAppStore((state)=>state.setToken)
+  const token = useAppStore((state)=>state.token)
+  // const { isAuthenticated,setIsAuthenticated , setUserEmail, setToken } = useContext(DispatchContext);
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
+    const usermail = localStorage.getItem('usermail')
+    setToken(authToken)
+    setUserEmail(usermail)
+   console.log(token)
     setIsAuthenticated(!!authToken);
   }, []);
 

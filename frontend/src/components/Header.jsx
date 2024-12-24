@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from './ui/button';
 import { NavLink } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
+import { useAppStore } from '@/Context/Zustand';
 const navLinks = [
   {
     name: "Home",
@@ -23,6 +24,8 @@ const navLinks = [
 
 ];
 const Header = () => {
+  const input = useAppStore((state) => state.input);
+  console.log(input)
   const location = useLocation()  
   return (
    <header className={`${(location.pathname==='/login' || location.pathname==='/signup') ? 'hidden' :'flex' } container justify-start md:justify-between mt-8 mx-auto `}>
