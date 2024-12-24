@@ -141,7 +141,25 @@ def generate_feedback(feedback_request:GenerateFeedback):
         """
         cursor.execute(insert_query, (feedback_request.email, str(feedback_request.conv_logs), str(report)))
         conn.commit()
+
         return JSONResponse(content=report, status_code=201)
+    except Exception as e:
+        return JSONResponse(content=f"Generate Feedback :: Bad Request {e}", status_code=400)
+    finally:
+        cursor.close()
+        conn.close()   
+
+@router.post("/get_feedback",dependencies=[Depends(JWTBearer())])
+def get_feedback(get_feedback_request:GetFeedback):
+    """Fetch the list of allowed domains."""
+    try:
+        email=get_feedback_request.email
+        conn = sql_connect()
+        cursor = conn.cursor()
+        query=f"select email,simulation_created,conversation_logs,feedback_generated from metadata where email='{email}'"
+        cursor.execute(query)
+        rows=cursor.fetchall()
+        return JSONResponse(content=rows, status_code=201)
     except Exception as e:
         return JSONResponse(content=f"Generate Feedback :: Bad Request {e}", status_code=400)
     finally:
