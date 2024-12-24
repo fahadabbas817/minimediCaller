@@ -27,3 +27,6 @@ class GenerateConversation(BaseModel):
 class GenerateFeedback(BaseModel):
     email: str
     conv_logs: str
+
+class GetFeedback(BaseModel):
+    email: str

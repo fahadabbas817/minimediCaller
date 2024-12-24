@@ -33,13 +33,13 @@ class HumanBotAgent:
     def get_bot_response(self, user_input, scenario, conv_history):
         """Generate the next response from the bot."""
         # self.conversation_context.append({'role': 'user', 'content': user_input})
-        # context = "\n".join([f"{msg['role']}: {msg['content']}" for msg in self.conversation_context])
+        context = "\n".join([f"{msg['role']}: {msg['content']}" for msg in conv_history])
 
         # "You are a distressed 911 caller and you have the context of the scenario and the ongoing conversation."
         #                 "Your task is to continue the conversation as a real caller based on the scenario and context"
         #                 "Your response must not be more than 60 words"
 
-        prompt = "Scenario: " + str(scenario) + "\n" + "Following is the conversation history:\n" + str(conv_history)
+        prompt = "Scenario: " + str(scenario) + "\n" + "Following is the conversation history:\n" + str(context)
 
         bot_response = ask_LLM(input_text=user_input, context=prompt, system_message= (
                         "You are a distressed 911 caller in a realistic emergency situation. Your role is "
