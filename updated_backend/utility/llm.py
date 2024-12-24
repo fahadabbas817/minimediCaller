@@ -1,10 +1,12 @@
 import os
 from groq import Groq
 
+from dotenv import load_dotenv
+load_dotenv()
+
 # Initialize Groq client with API key
 client = Groq(
-    # api_key=os.getenv("GROQ_API_KEY")
-    api_key="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"
+    api_key=os.getenv("GROQ_API_KEY")
 )
 
 def ask_LLM(input_text: str, system_message: str = "You are a helpful and friendly assistant.", context: str = None, temperature: float = 0.5):

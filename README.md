@@ -1,225 +1,228 @@
-# minimedi
-dispatcher training simulation and feedback engine
-
-# **Hybrid Conversational AI for Emergency Dispatch Training & Feedback**
-
-This document outlines a detailed plan and high-level wireframe for a **hybrid web application** that combines both a **Simulation Module** (for training dispatchers via realistic emergency call scenarios) and a **Feedback Engine** (for post-call analysis to improve performance).
+Emergency Dispatcher Training Simulation project. It explains the entire pipeline, from how each component works to how you can get started and extend the system. You can copy and paste this into a file named `README.md` or adapt it to your preferred format.
 
 ---
 
-## 1. Overall Vision
+# Emergency Dispatcher Training Simulation
 
-1. **Target Users**  
-   - **Trainee Dispatchers**: Practice handling simulated emergency calls.  
-   - **Trainers / Supervisors**: Review trainee performance and provide additional insights.
-
-2. **Core Components**  
-   - **Simulation Module**: Realistic AI-driven call scenarios.  
-   - **Feedback Engine**: Analysis of transcripts (text/audio) with actionable suggestions for improvement.
-
-3. **Desired Impact**  
-   - **Realistic Training**: Help dispatchers handle high-stress scenarios in a controlled environment.  
-   - **Continuous Improvement**: Automated, actionable feedback to highlight missing steps or deviations from protocols.
+This repository provides a **conversational AI simulation** where a **distressed caller** (played by an AI) interacts with a **dispatcher** (human user) to practice emergency call handling. The system also provides **feedback** on the dispatcher’s performance based on real-world 911 dispatcher protocols and guidelines.
 
 ---
 
-## 2. Detailed Approach
-
-### 2.1. Architecture Overview
-
-1. **Front-End (Web UI)**  
-   - Built with modern frameworks (React, Angular, Vue).  
-   - Delivers simulation interactions and displays feedback to users.
-
-2. **Back-End (Server-Side)**  
-   - Manages business logic, user sessions, transcripts, and scenario data.  
-   - Integrates with NLP/Conversational AI engines (OpenAI, Rasa, Dialogflow).
-
-3. **Conversational AI / NLP Engine**  
-   - Handles user input (text or voice), intent detection, entity extraction, and dialogue management.  
-   - Parses transcripts in the Feedback Engine to check for protocol adherence.
-
-4. **Database**  
-   - Stores scenarios, transcripts, user profiles, feedback reports, and performance metrics.
-
-5. **Third-Party Integrations (Optional)**  
-   - **Speech-to-Text** (Google Speech-to-Text) for real-time transcription.  
-   - **Text-to-Speech** for a realistic caller voice in simulations.
+## Table of Contents
+1. [Overview](#overview)  
+2. [Project Architecture](#project-architecture)  
+3. [Agents (Core Components)](#agents-core-components)  
+   - [TrainerAgent](#1-traineragent)  
+   - [HumanBotAgent](#2-humanbotagent)  
+   - [FeedbackReportGenerator](#3-feedbackreportgenerator)  
+4. [The `app.py` Script](#the-apppy-script)  
+5. [Installation & Setup](#installation--setup)    
+6. [Workflow Summary](#workflow-summary)  
+7. [Advanced Features & Future Enhancements](#advanced-features--future-enhancements)  
+8. [License](#license) (optional)  
+9. [Contact / Contributing](#contact--contributing) (optional)
 
 ---
 
-### 2.2. Key Features
+## Overview
+**Emergency Dispatchers** often encounter high-stress calls requiring adherence to strict protocols (e.g., verifying location, assessing the victim’s state). This project **simulates** these conversations and automatically **generates feedback** to improve dispatcher readiness.
 
-#### A. Simulation Module
-
-1. **Scenario Library**  
-   - Collection of emergency scenarios (e.g., cardiac arrest, fire incident, choking).  
-   - Each scenario has scripts, branching logic, and expected protocol steps.
-
-2. **Real-Time Conversational Flow**  
-   - Chat or audio interface for dispatcher–AI caller interaction.  
-   - **Dynamic Branching**: The AI adapts based on user responses.
-
-3. **Performance Alerts**  
-   - Real-time hints or alerts if critical protocol steps are missed.  
-   - Encourages immediate correction or awareness.
-
-4. **Immediate Score** *(Optional)*  
-   - After completing a scenario, shows a performance score (e.g., % of protocol adherence).
-
-#### B. Feedback Engine
-
-1. **Transcript Analysis**  
-   - Ingests text or audio transcripts (converted to text).  
-   - Identifies key phrases, protocol steps, or missing questions.
-
-2. **Deviation Detection**  
-   - Compares call handling to evidence-based guidelines.  
-   - Flags missing or incorrect steps (e.g., not verifying location).
-
-3. **Actionable Insights**  
-   - Specific recommendations: 
-     - “Use structured questions to assess the victim’s state.”  
-     - “Confirm address/spelling before dispatch.”
-
-4. **Metrics & Reporting**  
-   - Summarizes performance across multiple calls.  
-   - Shows repeated mistakes and improvement trends.
+### Key Functionalities
+- **Generate Realistic Emergency Scenarios**: Tailored to address common dispatcher mistakes.  
+- **Simulate Distressed Callers**: An AI that behaves as a panicked caller, forcing dispatchers to ask the right questions under pressure.  
+- **Provide Actionable Feedback**: Highlights positive aspects, missed steps, and suggestions for better call handling.
 
 ---
 
-### 2.3. Development Roadmap
+## Project Architecture
+Below is a high-level architecture of how everything fits together:
 
-1. **Phase 1: Foundation**  
-   - **UI/UX Skeleton**: Layout for simulation, feedback, dashboards.  
-   - **Basic AI Integration**: Connect simple NLP for Q&A flow.  
-   - **Data Models**: Define schema for users, transcripts, feedback results.
+```
++----------------------------+
+|      TrainerAgent          |
+| (Generates Scenario)       |
++-------------+--------------+
+              |
+     (Scenario Prompt)
+              v
++----------------------------+             +------------------------+
+|     HumanBotAgent          |  <----->    |   Dispatcher (User)    |
+|  (Distressed Caller AI)    |             |    Real-time Input     |
++-------------+--------------+             +-----------+------------+
+              |                                     |
+     (Conversation Logs)                             |
+              v                                     |
++----------------------------+                       |
+|  FeedbackReportGenerator   |       <---------------+
+| (Analyzes Conversation)    |  
++-------------+--------------+
+              |
+     (Feedback Report)
+              v
+   +----------------------------+
+   |      Output / Console      |
+   | (e.g., final report)       |
+   +----------------------------+
+```
 
-2. **Phase 2: Simulation Core**  
-   - **Scenario Builder**: Create/edit branching dialogues and expected responses.  
-   - **Real-Time Simulation**: Implement conversation logic, alerts, and final scoring.
-
-3. **Phase 3: Feedback Engine**  
-   - **Transcript Ingestion**: UI for uploading transcripts or audio files.  
-   - **Analysis & Reporting**: Parse transcripts, check protocol adherence, generate feedback.  
-   - **Dashboard**: Display performance overview with charts and metrics.
-
-4. **Phase 4: Optimization & Enhancements**  
-   - **Speech-to-Text**: Enable real-time or post-call transcription.  
-   - **Advanced NLU**: Handle synonyms, slang, or accent variations.  
-   - **Gamification**: Leaderboards, badges, or levels to motivate engagement.
-
----
-
-## 3. High-Level Wireframe
-
-Below is a simplified wireframe to illustrate the main screens of the web application.
-
-<pre>
---------------------------------------------------------------------------------
-| Logo / Product Name          | Simulation | Feedback | Dashboard | Settings |
---------------------------------------------------------------------------------
-
-(A) SIMULATION PAGE
---------------------------------------------------------------------------------
-| 1. Scenario Selector & Info (Left Side)                                     |
-|    - Dropdown: [Select Scenario]                                           |
-|    - Scenario Description                                                  |
-|    - Protocol Checklist (expandable)                                       |
-|                                                                            |
-| 2. Main Conversation Area (Center)                                         |
-|    --------------------------------------------------------------------    |
-|    | AI “Caller” Message: “Help, someone is unconscious...”            |    |
-|    | Dispatcher Input: [Type your response here...] [Send]             |    |
-|    --------------------------------------------------------------------    |
-|                                                                            |
-| 3. Real-Time Alerts / Hints (Right Side Panel)                             |
-|    - “Did you confirm the address?”                                       |
-|    - “Don’t forget to ask about breathing.”                               |
---------------------------------------------------------------------------------
-
-(B) FEEDBACK MODULE
---------------------------------------------------------------------------------
-| 1. Upload / Select Transcript (Top)                                        |
-|    - [Upload File] (Audio/Text)                                           |
-|    - [Select from Recent Calls]                                           |
-|                                                                            |
-| 2. Transcript Viewer (Left/Center)                                         |
-|    --------------------------------------------------------------------    |
-|    | Transcript Lines                                                   |   |
-|    | (Timestamp | Speaker | Text)                                      |   |
-|    --------------------------------------------------------------------    |
-|                                                                            |
-| 3. Feedback Analysis Panel (Right)                                         |
-|    - Deviation from protocol                                              |
-|    - Specific steps missed                                                |
-|    - Overall adherence score                                              |
---------------------------------------------------------------------------------
-
-(C) DASHBOARD
---------------------------------------------------------------------------------
-| 1. Summary of Key Metrics (Top)                                            |
-|    - Overall Adherence Rate                                               |
-|    - Common Mistakes                                                      |
-|    - Improvement Trend                                                    |
-|                                                                            |
-| 2. Detailed Charts / Stats (Center)                                        |
-|    - Bar/Line Charts for scenario performance                             |
-|    - Radar/Spider Charts for skill breakdown                              |
-|                                                                            |
-| 3. Recent Sessions (Bottom)                                               |
-|    - List of completed simulations/analysis                               |
-|    - Quick links to view or re-run reports                                |
---------------------------------------------------------------------------------
-
-(D) SETTINGS
---------------------------------------------------------------------------------
-| - User Management (add/remove trainers, dispatchers)                       |
-| - Scenario Management (create/edit scenario flows)                         |
-| - Protocol Library (manage evidence-based guidelines)                      |
---------------------------------------------------------------------------------
-</pre>
+### Core Flow
+1. **TrainerAgent** generates a scenario prompt (e.g., “Late-night call about a heart attack with background noise”).  
+2. **HumanBotAgent** takes on the role of the distressed caller using that scenario.  
+3. **Dispatcher** (the human user) tries to handle the call.  
+4. **Conversation logs** are collected.  
+5. **FeedbackReportGenerator** reviews the logs and provides a structured, actionable report.
 
 ---
 
-## 4. Best Practices / Optimal Tips
+## Agents (Core Components)
 
-1. **Modular Design**  
-   - Keep simulation and feedback modules loosely coupled.  
+### 1. **TrainerAgent**
+- **Purpose**: Generates **new emergency call scenarios** based on past feedback reports.  
+- **Usage**:
+  - Feeds on previous sessions’ issues (e.g., “slow response time”, “missed protocol steps”).  
+  - Creates a refined scenario prompt targeting those weaknesses.  
+- **Key Method**: `process_request(feedback_reports)`
 
-2. **Leverage Existing NLP Frameworks**  
-   - Consider Rasa (dialog management) or OpenAI’s GPT (robust NLU).
+### 2. **HumanBotAgent**
+- **Purpose**: Simulates the **distressed 911 caller**.  
+- **Usage**:
+  - Takes the scenario prompt from `TrainerAgent`.  
+  - Responds dynamically to dispatcher questions (user input) as if it’s a real caller in distress (crying, forgetting info, etc.).  
+- **Key Methods**:
+  - `initialize_conversation(prompt)`: Kickstarts the simulation with an opening scenario.  
+  - `get_bot_response(user_input)`: Generates new responses from the “distressed caller” based on user input.  
+  - `get_conversation_logs()`: Retrieves the entire conversation for feedback analysis.
 
-3. **Role-Based Access Control**  
-   - Differentiate Trainee, Trainer, and Admin functionalities.
-
-4. **Scalable Cloud Infrastructure**  
-   - AWS/Azure/GCP with containerization (Docker/Kubernetes) for easy scaling.
-
-5. **Data Security & Compliance**  
-   - Encrypt data in transit and at rest.  
-   - Follow CJIS/HIPAA-like regulations if handling sensitive data.
-
-6. **Continuous Iteration**  
-   - Gather user feedback from trainees and trainers to refine scenarios, AI accuracy, and feedback generation.
-
----
-
-## 5. Putting It All Together
-
-1. **Hybrid Workflow**  
-   - A trainee selects a scenario → interacts with the AI caller → finishes simulation → sees immediate score.  
-   - Transcript is generated → The Feedback Engine analyzes it → Detailed report with missed steps and suggestions.
-
-2. **Value Proposition**  
-   - **Realistic Training + Actionable Feedback**: An end-to-end cycle for dispatcher skill development.  
-   - **Performance Tracking**: Trainers can identify patterns and tailor interventions.
-
-3. **Future Enhancements**  
-   - **Gamification**: Award badges or ranks for successful simulations.  
-   - **Advanced AI**: More nuanced caller responses, emotional intelligence detection.  
-   - **Voice Biometrics**: Stress or authenticity analysis in calls.
+### 3. **FeedbackReportGenerator**
+- **Purpose**: **Analyzes** the final conversation logs and produces a **feedback report**.  
+- **Usage**:
+  - Takes conversation logs (list of role-content messages).  
+  - Uses an LLM prompt to identify missed protocol steps, positive aspects, and improvements.  
+- **Key Method**: `generate_feedback(conversation_logs)`
 
 ---
 
-**With this hybrid approach, dispatchers can engage in guided simulations while continuously learning from the detailed feedback, ultimately improving the speed, accuracy, and consistency of emergency responses.**
+## The `app.py` Script
+The **entry point** (`app.py`) ties everything together:
+
+1. **Step 1**: Import and initialize the agents.  
+2. **Step 2**: Call `TrainerAgent.process_request()` to **generate a scenario**.  
+3. **Step 3**: Pass this scenario to `HumanBotAgent.initialize_conversation()`, which simulates the caller’s first response.  
+4. **Step 4**: **User** (dispatcher) interacts in a loop. Type your questions/commands; the AI (caller) replies.  
+   - Exit the loop by typing “quit,” “exit,” or “bye.”  
+5. **Step 5**: Retrieve the conversation logs from `HumanBotAgent.get_conversation_logs()`.  
+6. **Step 6**: Pass logs to `FeedbackReportGenerator.generate_feedback()`.  
+7. **Step 7**: Print out or store the feedback report.
+
+A typical run looks like:
+
+```
+python app.py
+```
+
+- The script prints the scenario, then starts the interactive conversation.  
+- Once the conversation ends, it shows the final feedback report.
+
+---
+
+## Installation & Setup
+
+1. **Clone the Repository**  
+   ```bash
+   git clone https://github.com/YourUsername/EmergencyDispatcherTraining.git
+   cd EmergencyDispatcherTraining
+   ```
+
+2. **Install Dependencies**  
+   - Create and activate a virtual environment (recommended):
+     ```bash
+     python3 -m venv venv
+     source venv/bin/activate   # Mac/Linux
+     # For Windows: venv\Scripts\activate
+     ```
+   - Install required packages:
+     ```bash
+     pip install -r requirements.txt
+     ```
+   > **Note**: You may need API keys if you’re using an external LLM service (e.g., OpenAI).  
+
+3. **Project Structure**:
+   ```
+   EmergencyDispatcherTraining/
+   ├── agents/
+   │   ├── __init__.py
+   │   ├── trainer_agent.py
+   │   ├── human_bot_agent.py
+   │   └── feedback_report_agent.py
+   ├── rouetrs/
+   │   ├── __init__.py
+   │   ├── auth.py
+   │   ├── setup.py
+   │   └── users.py
+   ├── services/
+   │   ├── sql_connection.py
+   ├── utility/
+   │   ├── auth_bearer.py
+   │   ├── auth_helper.py
+   │   └── data_store.py
+   ├── app.py
+   ├── main_audio.py
+   ├── main.py
+   ├── model.py
+   ├── requirements.txt
+   ├── README.md
+   └── ...
+   ```
+
+---
+
+## Workflow Summary
+
+1. **Feedback Reports** (Past Sessions)  
+   - “Session #1: Missed verifying location, slow instructions.”  
+2. **TrainerAgent**  
+   - Incorporates that data into a new scenario prompt (e.g., “Emphasize location confirmation quickly”).  
+3. **HumanBotAgent**  
+   - Responds as a frantic caller with partial info, background noise, etc.  
+4. **Live Interaction**  
+   - User asks questions → AI replies → logs accumulate.  
+5. **FeedbackReportGenerator**  
+   - Takes the entire conversation → Analyzes with LLM → Identifies missed steps or best practices → Returns a structured feedback summary.
+
+---
+
+## Advanced Features & Future Enhancements
+
+1. **Multi-Lingual Support**  
+   - Real emergencies happen in various languages. Integrate translation for bilingual or multilingual calls.
+2. **Gamification & Scoring**  
+   - Assign a numerical score for each call, highlight repeated patterns, or track progress over multiple sessions.
+3. **Protocol Library Integration**  
+   - For advanced setups, integrate standard emergency protocols (like MPDS) and check specifically if each step is followed.
+4. **Dashboard & Analytics**  
+   - Build a web interface to track each dispatcher’s improvement over time, generate performance graphs, etc.
+5. **Role-Based Access**  
+   - Differentiate between Trainee Dispatchers, Trainers, and Admins. Provide each role with relevant data and permissions.
+
+---
+
+## License
+*(Optional)*  
+You may want to add a license (e.g., MIT, Apache 2.0) to clarify usage rights.
+
+---
+
+## Contact / Contributing
+*(Optional)*  
+- **Contact**: If you have questions or suggestions, reach out to:
+   - Rahul Singh
+   - Sanket Bodake
+   - Puroshotam Singh
+   - Fahad Abbas
+- **Contributions**: PRs are welcome! Fork the repo, add features, and open a pull request.
+
+---
+
+### End of README
+
+By following this documentation, you’ll understand each **component** of the pipeline, how to **run** it, and how to **extend** it for more realistic, robust dispatcher training. Good luck with your **Emergency Dispatcher Training Simulation**!
