@@ -28,19 +28,18 @@ function App() {
   const token = useAppStore((state)=>state.token)
   // const { isAuthenticated,setIsAuthenticated , setUserEmail, setToken } = useContext(DispatchContext);
 
-  useEffect(() => {
-    const authToken = localStorage.getItem('authToken');
-    const usermail = localStorage.getItem('usermail')
-    setToken(authToken)
-    setUserEmail(usermail)
-   console.log(token)
-    setIsAuthenticated(!!authToken);
-  }, []);
+  // useEffect(() => {
+  //   const authToken = localStorage.getItem('authToken');
+  //   const usermail = localStorage.getItem('usermail')
+  //   setToken(authToken)
+  //   setUserEmail(usermail)
+  //  console.log(token)
+  //   setIsAuthenticated(!!authToken);
+  // }, []);
 
   return (
     <Router>
       <div className="flex h-screen bg-gradient-to-br from-blue-100 to-purple-100">
-        {/* {isAuthenticated && <Sidebar />} */}
         <main className="flex-1 overflow-y-auto bg-gradient-to-r from-emerald-500 to-emerald-900">
           {isAuthenticated && <Header />}
           <Routes>
@@ -53,25 +52,7 @@ function App() {
             <Route path="/feedback" element={<FeedbackModule />} />
             <Route path="/reports" element={<ReportingDashboard />} />
           </Routes>
-          {/* <Routes>
-            <Route path="/auth" element={<AuthPage />} />
-            <Route
-              path="/*"
-              element={
-                isAuthenticated ? (
-                  <Routes>
-                    {/* <Route path="/" element={<HomePage />} /> */}
-          {/* <Route path="/" element={<Dashboard />} />
-                    <Route path="/simulation" element={<SimulationModule />} />
-                    <Route path="/feedback" element={<FeedbackModule />} />
-                    <Route path="/reports" element={<ReportingDashboard />} />
-                  </Routes> */}
-          {/* ) : ( */}
-          {/* <Navigate to="/auth" replace /> */}
-          {/* ) */}
-          {/* } */}
-          {/* /> */}
-          {/* </Routes> */} */
+     
         </main>
       </div>
     </Router>

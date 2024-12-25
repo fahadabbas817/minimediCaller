@@ -21,7 +21,8 @@ export function SimulationTranscript({
   isUserSpeaking,
   onStartSimulation,
   isSimulationActive,
-  controlsRef
+  controlsRef,
+ 
 }) {
 
   const setSelectedScenario = useAppStore((state)=>state.setSelectedScenario)
@@ -83,20 +84,7 @@ export function SimulationTranscript({
               {transcript.scenario}
             </p>
           </div>
-          {/* 
-        {(isBotSpeaking || isUserSpeaking) && (
-          <div className="flex items-center space-x-2 mt-4 bg-gray-100 p-3 rounded-md">
-            {isBotSpeaking ? (
-              <Bot className="h-6 w-6 text-green-500" />
-            ) : (
-              <User className="h-6 w-6 text-blue-500" />
-            )}
-            <Loader2 className="h-4 w-4 animate-spin" />
-            <span className="text-sm font-medium">
-              {isBotSpeaking ? "Chatbot is speaking..." : "Listening..."}
-            </span>
-          </div>
-        )} */}
+
         </CardContent>
       </Card>
       {!isSimulationActive && (

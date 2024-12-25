@@ -14,9 +14,7 @@ function Dashboard() {
    
 
   useEffect(() => {
-    // Check localStorage for saved authentication state
-    const authToken = localStorage.getItem('authToken');
-    setIsAuthenticated(!!authToken);
+
     isAuthenticated?navigate('/'):navigate('/login')
   }, []);
   return (

@@ -4,18 +4,22 @@ import { Mic, MicOff, PhoneCall, PhoneOff } from 'lucide-react';
 import chatbot from '@/assets/chatbot.jpg'
 import userImg from '@/assets/user.jpg'
 
+
 export function SimulationControls({
   isSimulationActive,
   isBotSpeaking,
   isUserSpeaking,
   onStartSimulation,
   onMicToggle,
-  onEndSimulation
+  onEndSimulation,
+  handleGenerateFeedback
 }) {
  
+ 
+
 if(isSimulationActive){
   return (
-    <div className="flex flex-col mt-10 space-y-20 h-screen">
+    <div className="flex flex-col mt-10  space-y-20">
       <h1 className='text-xl md:text-3xl font-semibold text-gray-200'>Simulator Conversation</h1>
       <div className="flex justify-center space-x-2 md:space-x-60">
         {/* Dispatcher Card */}
@@ -82,7 +86,7 @@ if(isSimulationActive){
       <div className='flex justify-center'>
         <Button
           className='p-6 text-lg w-max rounded-full flex items-center space-x-2 mt-4'
-          onClick={onEndSimulation}
+          onClick={handleGenerateFeedback}
           variant="outline"
         >
           <PhoneOff className="h-5 w-5 text-red-500" />

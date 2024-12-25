@@ -9,10 +9,27 @@ export const useAppStore = create((set) => ({
   scenario: {},
   isSimulationActive: false,
   userResponse:"",
-  botResponse:"Hello! This is 911. What is your emergency?",
+  botResponse:"Hello! This is nine one one. What is your emergency?",
+  convHistory: [],
+  reportData:{},
 
   // Actions to update state
+  updateConversation: (message, role) =>
+    set((state) => {
+      const updatedHistory = [
+        ...state.convHistory,
+        { role, text: message },
+      ];
+
+      // Keep only the last 10 messages
+      if (updatedHistory.length > 10) {
+        updatedHistory.shift();
+      }
+
+      return { convHistory: updatedHistory };
+    }),
   setUserResponse: (userResponse) => set({ userResponse }),
+  setReportData: (reportData) => set({ reportData }),
   setBotResponse: (botResponse) => set({ botResponse }),
   setInput: (input) => set({ input }),
   setInput: (input) => set({ input }),

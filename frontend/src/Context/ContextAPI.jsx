@@ -153,15 +153,15 @@ const ContextProvider = (props)=>{
 //         }
 //       };
       
-  useEffect(() => {
-      // Check localStorage for saved authentication state
-      const authToken = localStorage.getItem('authToken');
-      setToken(authToken)
-      const usermail = localStorage.getItem('usermail')
-      setUserEmail(usermail)
-      setIsAuthenticated(!!authToken);
+//   useEffect(() => {
+//       // Check localStorage for saved authentication state
+//       const authToken = localStorage.getItem('authToken');
+//       setToken(authToken)
+//       const usermail = localStorage.getItem('usermail')
+//       setUserEmail(usermail)
+//       setIsAuthenticated(!!authToken);
 
-    }, []);
+//     }, []);
 
 
     const contextValue = {

@@ -1,72 +1,81 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, { useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ThumbsUp, ThumbsDown, MessageCircle, Brain, Shield, Heart, Zap } from 'lucide-react';
+import { useAppStore } from '@/Context/Zustand';
 
-function ReportingDashboard() {
-  // This would typically come from an API or state management
-  const performanceData = [
-    { month: 'Jan', adherence: 75 },
-    { month: 'Feb', adherence: 80 },
-    { month: 'Mar', adherence: 85 },
-    { month: 'Apr', adherence: 82 },
-    { month: 'May', adherence: 88 },
-    { month: 'Jun', adherence: 90 },
-  ];
+const SimulationResults = () => {
+  const reportData = useAppStore((state) => state.reportData);
+  // const [results, setResults] = useState('')
+  console.log(reportData)
+  // If there's no report data, render nothing
+  if (!reportData || Object.keys(reportData).length === 0) {
+    return  <div className='flex justify-center items-center h-screen' >
+      <h1 className='text-5xl text-gray-400 font-semibold text-center'>NO Report Generated Yet</h1>
+    </div> ;
+  }
 
-  const commonMissedSteps = [
-    { step: "Failure to obtain caller's phone number", count: 15 },
-    { step: "Incorrect prioritization of emergency", count: 12 },
-    { step: "Missed critical pre-arrival instructions", count: 10 },
-    { step: "Inadequate location verification", count: 8 },
-  ];
+ const results = reportData
 
   return (
-    <div className="container mx-auto mt-10 space-y-8 mb-10">
-      <h1 className="text-3xl font-bold text-center text-gray-200">Reporting Dashboard</h1>
+    <div className="container mx-auto p-4 mt-10 space-y-6">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        {[
+          { icon: Brain, label: 'Situation Assessment', value: results.situation_assessment_triage },
+          { icon: Shield, label: 'Protocol Adherence', value: results.protocol_adherence },
+          { icon: Heart, label: 'Emotional Intelligence', value: results.emotional_intelligence },
+          { icon: Zap, label: 'Adaptive Thinking', value: results.adaptive_thinking },
+          { icon: MessageCircle, label: 'Communication Skills', value: results.communication_skills },
+        ].map((skill, index) => (
+          <Card key={index}>
+            <CardContent className="flex flex-col items-center justify-center p-4">
+              <skill.icon className="w-8 h-8 mb-2 text-teal-500" />
+              <h3 className="text-sm font-semibold text-center">{skill.label}</h3>
+              <div className="text-2xl font-bold">{skill.value}</div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <ThumbsUp className="w-6 h-6 mr-2 text-green-500" />
+              Positive Aspects
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>{results.positive_aspects}</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <ThumbsDown className="w-6 h-6 mr-2 text-red-500" />
+              Negative Aspects
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>{results.negative_aspects}</p>
+          </CardContent>
+        </Card>
+      </div>
+
       <Card>
         <CardHeader>
-          <CardTitle>Performance Trend</CardTitle>
+          <CardTitle className="flex items-center">
+            <MessageCircle className="w-6 h-6 mr-2 text-blue-500" />
+            Feedback
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={performanceData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="adherence" stroke="#8884d8" />
-            </LineChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Commonly Missed Steps</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Step</TableHead>
-                <TableHead>Count</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {commonMissedSteps.map((item, index) => (
-                <TableRow key={index}>
-                  <TableCell>{item.step}</TableCell>
-                  <TableCell>{item.count}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <p>{results.feedback}</p>
         </CardContent>
       </Card>
     </div>
   );
-}
+};
 
-export default ReportingDashboard;
+export default SimulationResults;
 

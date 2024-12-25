@@ -21,6 +21,10 @@ const navLinks = [
     name: "Report",
     link: "/reports",
   },
+  {
+    name: "Log Out",
+    link: "/login",
+  },
 
 ];
 const Header = () => {
