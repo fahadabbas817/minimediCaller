@@ -117,8 +117,7 @@ def generate_conversation(convers_request:GenerateConversation):
 
     except Exception as e:
         return JSONResponse(content=f"Generate Conversation :: Bad Request {e}", status_code=400)
-    
-        
+
 @router.post("/feedback",dependencies=[Depends(JWTBearer())])
 def generate_feedback(feedback_request:GenerateFeedback):
     """Fetch the list of allowed domains."""

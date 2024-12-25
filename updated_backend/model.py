@@ -28,5 +28,6 @@ class GenerateFeedback(BaseModel):
     email: str
     conv_logs: list[dict]
 
+
 class GetFeedback(BaseModel):
     email: str
