@@ -26,7 +26,7 @@ class GenerateConversation(BaseModel):
 
 class GenerateFeedback(BaseModel):
     email: str
-    conv_logs: str
+    conv_logs: list[dict]
 
 class GetFeedback(BaseModel):
     email: str

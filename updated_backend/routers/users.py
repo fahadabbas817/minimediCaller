@@ -127,10 +127,14 @@ def generate_feedback(feedback_request:GenerateFeedback):
         cursor = conn.cursor()
         # Generate feedback report
         feedback_report = feedback_generator.generate_feedback(feedback_request.conv_logs)
+        feedback_report=feedback_report['feedback_report']
 
         try:
-            report = re.findall(r'{.*?}', feedback_report['feedback_report'], re.DOTALL)
-            report = json.loads(report[0])
+            # report = re.findall(r'{.*?}', feedback_report['feedback_report'], re.DOTALL)
+            # report = json.loads(report[0])
+            report=feedback_report[feedback_report.find("{"):feedback_report.rfind("}")+1]
+            report=eval(report)
+
         except Exception as e:
             print("Exception raised during fetching Json format of feedback report: ", e)
             report = feedback_report['feedback_report']
@@ -143,6 +147,7 @@ def generate_feedback(feedback_request:GenerateFeedback):
         conn.commit()
 
         return JSONResponse(content=report, status_code=201)
+
     except Exception as e:
         return JSONResponse(content=f"Generate Feedback :: Bad Request {e}", status_code=400)
     finally:
