@@ -18,7 +18,7 @@ export const useAppStore = create((set) => ({
     set((state) => {
       const updatedHistory = [
         ...state.convHistory,
-        { role, text: message },
+        { role, content: message },
       ];
 
       // Keep only the last 10 messages
@@ -28,6 +28,8 @@ export const useAppStore = create((set) => ({
 
       return { convHistory: updatedHistory };
     }),
+   
+  setConvHistory: (convHistory) => set({ convHistory }),
   setUserResponse: (userResponse) => set({ userResponse }),
   setReportData: (reportData) => set({ reportData }),
   setBotResponse: (botResponse) => set({ botResponse }),

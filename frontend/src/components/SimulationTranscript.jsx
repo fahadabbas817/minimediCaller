@@ -22,12 +22,20 @@ export function SimulationTranscript({
   onStartSimulation,
   isSimulationActive,
   controlsRef,
+  onEndSimulation
  
 }) {
 
+  const handleNewBUtton =()=>{
+    onEndSimulation()
+    setSelectedScenario(!selectedScenario)
+  }
+
   const setSelectedScenario = useAppStore((state)=>state.setSelectedScenario)
   const selectedScenario = useAppStore((state)=>state.selectedScenario)
- 
+ console.log(typeof(transcript))
+
+
   return (
     <>
    
@@ -40,7 +48,7 @@ export function SimulationTranscript({
         <Button
           variant="outline"
           className="flex gap-1 w-fit p-1  md:gap-2 bg-gray-200 text-teal-900 font-semibold"
-          onClick={() => setSelectedScenario(!selectedScenario)}
+          onClick={handleNewBUtton}
         >
           <Plus className="" />
           <span className="">New Scenario</span>

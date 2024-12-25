@@ -13,10 +13,10 @@ const navLinks = [
     name: "Simulator",
     link: "/simulation",
   },
-  {
-    name: "Feedback",
-    link: "/feedback",
-  },
+  // {
+  //   name: "Feedback",
+  //   link: "/feedback",
+  // },
   {
     name: "Report",
     link: "/reports",

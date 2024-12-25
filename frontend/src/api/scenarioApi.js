@@ -50,6 +50,16 @@ export const generateFeedbackService = async (email,conv_logs,token) => {
       }
     );
     console.log(response.data)
-    return response.data;
+    let responseData;
+    try {
+      // If response.data is already an object, this does nothing
+      // If it's a string, it attempts to parse it
+      responseData = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+    } catch (error) {
+      console.error('Error parsing response data:', error);
+      throw new Error('Invalid JSON response');
+    }
+    return responseData;
+   
   };
 

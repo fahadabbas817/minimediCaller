@@ -23,7 +23,7 @@ const Contributors = () => {
           image: sanket,
         },
         {
-          name: "Parshautam",
+          name: "Puroshotam",
           linkedin:
             "https://www.linkedin.com/in/puroshotam-singh/",
           image: parh,

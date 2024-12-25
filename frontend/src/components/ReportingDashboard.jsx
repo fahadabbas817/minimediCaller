@@ -3,12 +3,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ThumbsUp, ThumbsDown, MessageCircle, Brain, Shield, Heart, Zap } from 'lucide-react';
 import { useAppStore } from '@/Context/Zustand';
 
+
+
 const SimulationResults = () => {
+
+  
+
   const reportData = useAppStore((state) => state.reportData);
   // const [results, setResults] = useState('')
   console.log(reportData)
+  console.log(typeof(reportData))
   // If there's no report data, render nothing
-  if (!reportData || Object.keys(reportData).length === 0) {
+  if (reportData==="" || Object.keys(reportData).length === 0) {
     return  <div className='flex justify-center items-center h-screen' >
       <h1 className='text-5xl text-gray-400 font-semibold text-center'>NO Report Generated Yet</h1>
     </div> ;
