@@ -2,7 +2,7 @@ import datetime
 import os
 import bcrypt
 from fastapi import HTTPException, status
-from dotenv import load_dotenv
+from dotenv.main import load_dotenv
 from jose import JWTError, jwt
 # import jwt
 

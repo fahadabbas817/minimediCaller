@@ -22,22 +22,16 @@ async def create_service():
            print(f"An error occurred in user table Creation: {e}")
 
         # Define the table schema (modify as needed)
-        # create_table_query = """CREATE TABLE IF NOT EXISTS file_metadata (
-        # id TEXT NOT NULL,
-        # file_name TEXT UNIQUE NOT NULL,
-        # file_size TEXT NOT NULL,
-        # uploaded_by TEXT,
-        # chunk_ids TEXT NOT NULL,
-        # token_used TEXT,
-        # credit_used TEXT,
-        # category_id TEXT NOT NULL,
-        # status INT NOT NULL,
-        # uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);"""
+        create_table_query = """CREATE TABLE IF NOT EXISTS metadata (
+         email TEXT NOT NULL,
+         simulation_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+         conversation_logs TEXT,
+         feedback_generated TEXT);"""
 
-        # try:
-        #    cursor.execute(create_table_query)
-        #    print("2. file metadata Table available")
-        # except Exception as e:
-        #    print(f"An error occurred in user table Creation: {e}")
+        try:
+           cursor.execute(create_table_query)
+           print("2. file metadata Table available")
+        except Exception as e:
+           print(f"An error occurred in metadata table Creation: {e}")
 
         
