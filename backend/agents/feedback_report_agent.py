@@ -57,7 +57,8 @@ class FeedbackReportGenerator:
             "'overall_rating': 'overall rating of how the dispatcher handled the call',"
             "'keyphrases_feedback': 'list of issues based on the dispatcher performance. for e.g. [slow response time, missed critical protocol steps, lack of empathy]'}}"
             "\n"
-          
+            
+            "NOTE: IF THE ABOVE CONVERSATIONAL LOGS ARE VERY SHORT, THE OUTPUT SCORES MUST BE BELOW 3"
         )
 
         system_message = "You are an expert trainer analyzing 911 dispatcher conversations."

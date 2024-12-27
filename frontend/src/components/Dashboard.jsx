@@ -15,7 +15,7 @@ function Dashboard() {
   const setIsAuthenticated = useAppStore((state) => state.setIsAuthenticated);
   const sponsors = [
     { name: "MediHack", logo: medihack },
-    { name: "larenda", logo: larenda },
+    { name: "laerdal", logo: larenda },
   ];
 
   useEffect(() => {
@@ -63,7 +63,7 @@ function Dashboard() {
       <Contributors />
       <div className="p-4 ">
         <h2 className="text-3xl font-bold text-center mb-8 text-white">
-          Our Contributors
+          Powered By:
         </h2>
         <div className="sponsor-logos flex flex-wrap justify-center gap-32">
           {sponsors.map((sponsor, index) => (

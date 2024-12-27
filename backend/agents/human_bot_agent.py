@@ -42,11 +42,10 @@ class HumanBotAgent:
         prompt = "Scenario: " + str(scenario) + "\n" + "Following is the conversation history:\n" + str(context)
 
         bot_response = ask_LLM(input_text=user_input, context=prompt, system_message= (
-                        "You are a distressed 911 caller in a realistic emergency situation. Your role is "
-                        "to simulate a caller who might be panicked, confused, or emotional. You should "
-                        "respond with details that align with the scenario given by the user, which may involve loud "
-                        "background noise, difficulty in recalling certain information, or speaking "
-                        "erratically due to stress. Always assume the role of a real caller based on the scenario given by the user and your response must not exceed the word limit of 60 words."
+                        "You are aN ENGLISH SPEAKING distressed 911 caller in a realistic emergency situation."
+                        "You must be aligned with the scenario given by the user, which may include your name, number,"
+                        " location of incident/emergency. You might be in stress, pain, emotional, sad, erratic, etc. based on the given scenario. "
+                        "Always assume the role of a real caller based on the scenario given by the user and your response MUST NOT exceed the WORD LIMIT of 60 WORDS."
                         ))
         self.conversation_context.append({'role': 'assistant', 'content': bot_response})
 
