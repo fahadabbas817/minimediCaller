@@ -22,4 +22,4 @@ export default defineConfig({
   build: {
     outDir: 'frontend/build', // Specify the output directory here
   },
-});
+})
