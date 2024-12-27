@@ -51,15 +51,14 @@ class TrainerAgent:
                 {feedback_reports}
 
                 ## Output Format:
-                The output must be structured in JSON format with the following keys:
-                {{
-                    "callers_name": "Name of the caller"
-                    "callers_contact_no": "Caller’s contact number"
-                    "callers_location": "Caller’s location"
-                    "callers_emergency_type": "Type of emergency"
-                    "scenario_title": "A concise title summarizing the scenario"
-                    "scenario": "A short narrative describing just the incident or emergency in NOT MORE THAN 60 WORDS."
-                }}
+                The output must be only in JSON Format with following keys:
+                "callers_name": str | name of the caller,
+                "callers_contact_no": str | caller's contact number,
+                "callers_location: str | caller's location,
+                "callers_emergency_type: str | emergency type of caller,
+                "scenario_title": str | scenario title outline,
+                "scenario: str | A short, crisp and precise, narrative describing the incident or accident or emergency or the situation that prompts the call."
+
                 """
 
         
@@ -79,15 +78,14 @@ class TrainerAgent:
 
 
                 ## Output Format:
-                The output must be structured in JSON format with the following keys:
-                {{
-                    "callers_name": "Name of the caller"
-                    "callers_contact_no": "Caller’s contact number"
-                    "callers_location": "Caller’s location"
-                    "callers_emergency_type": "Type of emergency"
-                    "scenario_title": "A concise title summarizing the scenario"
-                    "scenario": "A short narrative describing just the incident or emergency in NOT MORE THAN 60 WORDS."
-                }}
+                The output must be only in JSON Format with following keys:
+                "callers_name": str | name of the caller,
+                "callers_contact_no": str | caller's contact number,
+                "callers_location: str | caller's location,
+                "callers_emergency_type: str | emergency type of caller,
+                "scenario_title": str | scenario title outline,
+                "scenario: str | A short, crisp and precise, narrative describing the incident or accident or emergency or the situation that prompts the call."
+
                 """
 
         scenario_prompt = ask_LLM(input_text=input_text, system_message=system_message, temperature=0.7)
