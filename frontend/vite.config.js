@@ -20,6 +20,6 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'frontend/build', // Specify the output directory here
+    outDir: 'frontend', // Specify the output directory here
   },
 })
