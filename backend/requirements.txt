@@ -48,7 +48,6 @@ pydantic==2.10.4
 pydantic_core==2.27.2
 pydeck==0.9.1
 Pygments==2.18.0
-pypiwin32==223
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 referencing==0.35.1
