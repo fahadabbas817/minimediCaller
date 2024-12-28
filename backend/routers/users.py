@@ -112,7 +112,7 @@ def generate_conversation(convers_request:GenerateConversation):
         dispatcher_text = convers_request.dispatcher_text
         conv_history = convers_request.conv_history
 
-        bot_response = human_bot_agent.get_bot_response(dispatcher_text, scenario, conv_history)
+        bot_response = human_bot_agent.get_bot_response(dispatcher_text, scenario['scenario_detailed'], conv_history)
         return JSONResponse(content=bot_response, status_code=201)
 
     except Exception as e:

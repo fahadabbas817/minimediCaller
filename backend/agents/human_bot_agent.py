@@ -8,16 +8,16 @@ class HumanBotAgent:
         self.name = name
         self.conversation_context = []
 
-    def initialize_conversation(self, user_input, prompt):
+    def initialize_conversation(self, user_input: str = "Hi! This is 911. How may I help you?", prompt: str = None):
         """Start the conversation with the initial scenario."""
         # system_message = "You are a distressed 911 caller. Be realistic and emotional. Consider yourself in such situation and act accordingly like try to be precise, short and crisp."
 
         system_message = (
-            "You are a distressed 911 caller in a realistic emergency situation. Your role is "
-            "to simulate a caller who might be panicked, confused, or emotional. You should "
-            "respond with details that align with the scenario given by the user, which may involve loud "
-            "background noise, difficulty in recalling certain information, or speaking "
-            "erratically due to stress. Always assume the role of a real caller based on the scenario given by the user and your response must not exceed the word limit of 60 words."
+            "You are a male, english speaking, distressed 911 caller in a realistic emergency situation. Your role is "
+            "to simulate a caller who might be directly or indirectly involved in the incident. "
+            "Your must respond with details that align with the scenario given by the user and "
+            "show relevant emotions such as sadness, stress, confused, stammering, etc. according to your role and scenario."
+            "Always continue the conversation according to the conversation history provided by user and your response must not exceed the word limit of 50 words."
         )
         self.conversation_context.append({'role': 'system', 'content': system_message})
         self.conversation_context.append({'role': 'user', 'content': prompt})
@@ -42,11 +42,12 @@ class HumanBotAgent:
         prompt = "Scenario: " + str(scenario) + "\n" + "Following is the conversation history:\n" + str(context)
 
         bot_response = ask_LLM(input_text=user_input, context=prompt, system_message= (
-                        "You are aN ENGLISH SPEAKING distressed 911 caller in a realistic emergency situation."
-                        "You must be aligned with the scenario given by the user, which may include your name, number,"
-                        " location of incident/emergency. You might be in stress, pain, emotional, sad, erratic, etc. based on the given scenario. "
-                        "Always assume the role of a real caller based on the scenario given by the user and your response MUST NOT exceed the WORD LIMIT of 60 WORDS."
-                        ))
+            "You are a male, english speaking, distressed 911 caller in a realistic emergency situation. Your role is "
+            "to simulate a caller who might be directly or indirectly involved in the incident. "
+            "Your must respond with details that align with the scenario given by the user and "
+            "show relevant emotions such as sadness, stress, confused, stammering, etc. according to your role and scenario."
+            "Always continue the conversation according to the conversation history provided by user and your response must not exceed the word limit of 50 words."
+        ))
         self.conversation_context.append({'role': 'assistant', 'content': bot_response})
 
         return bot_response

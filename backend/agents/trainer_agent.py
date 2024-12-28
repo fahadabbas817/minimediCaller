@@ -39,25 +39,19 @@ class TrainerAgent:
                 Generate a realistic and detailed 911 call scenario for the "{emergency_type}" type of emergency based on the following past feedback:
                 - {feedback_reports}
 
-                ## Scenario Requirements:
-                1. The caller is a MALE CALLER who is in a realistic setting with potential challenges (e.g., loud background noise, language barriers, or emotional distress).
-                2. The scenario emphasizes the importance of verifying location details (address, caller's phone number) early in the call.
-                3. The caller exhibits signs of panic, confusion, or distress, adding complexity to the interaction.
-                4. The situation involves a critical medical or emergency condition (e.g., choking, severe injury, fire, or unconsciousness) requiring the dispatcher to ask clarifying follow-up questions.
-                5. Include rich contextual details (e.g., time of day, environment, weather, background events) to enhance the trainee's understanding of urgency and complexity.
-
                 ## Past Feedback Integration:
                 - Focus on addressing issues identified in previous feedback sessions to highlight specific improvement areas for the dispatcher:
                 {feedback_reports}
 
                 ## Output Format:
                 The output must be only in JSON Format with following keys:
-                "callers_name": str | name of the caller,
+                "callers_name": str | name of the caller whose gender is MALE,
                 "callers_contact_no": str | caller's contact number,
                 "callers_location: str | caller's location,
                 "callers_emergency_type: str | emergency type of caller,
                 "scenario_title": str | scenario title outline,
-                "scenario: str | A short, crisp and precise, narrative describing the incident or accident or emergency or the situation that prompts the call."
+                "scenario_brief: str | A short, crisp and precise information about the incident or accident or emergency or the situation."
+                "scenario_detailed: str | A detailed description about the incident (Not more than 60 words) including rich contextual details (e.g., weather, time of day, environment, etc.)."
 
                 """
 
@@ -69,25 +63,18 @@ class TrainerAgent:
             input_text = f"""
                 Generate a realistic and detailed 911 call scenario for the "{emergency_type}" type of emergency.
 
-                ## Scenario Requirements:
-                1. The caller is in a realistic setting with potential challenges (e.g., loud background noise, language barriers, or emotional distress).
-                2. The scenario emphasizes the importance of verifying location details (address, caller's phone number) early in the call.
-                3. The caller exhibits signs of panic, confusion, or distress, adding complexity to the interaction.
-                4. The situation involves a critical medical or emergency condition (e.g., choking, severe injury, fire, or unconsciousness) requiring the dispatcher to ask clarifying follow-up questions.
-                5. Include rich contextual details (e.g., time of day, environment, weather, background events) to enhance the trainee's understanding of urgency and complexity.
-
-
                 ## Output Format:
                 The output must be only in JSON Format with following keys:
-                "callers_name": str | name of the caller,
+                "callers_name": str | name of the caller whose gender is MALE,
                 "callers_contact_no": str | caller's contact number,
                 "callers_location: str | caller's location,
                 "callers_emergency_type: str | emergency type of caller,
                 "scenario_title": str | scenario title outline,
-                "scenario: str | A short, crisp and precise, narrative describing the incident or accident or emergency or the situation that prompts the call."
+                "scenario_brief: str | A short, crisp and precise information about the incident or accident or emergency or the situation."
+                "scenario_detailed: str | A detailed description about the incident (Not more than 60 words) including rich contextual details (e.g., weather, time of day, environment, etc.) along with caller information (name, number and location)."
 
                 """
 
-        scenario_prompt = ask_LLM(input_text=input_text, system_message=system_message, temperature=0.7)
+        scenario_prompt = ask_LLM(input_text=input_text, system_message=system_message, temperature=0.6)
 
         return {"scenario_prompt": scenario_prompt}

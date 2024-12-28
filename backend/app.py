@@ -18,9 +18,9 @@ feedback_generator = FeedbackReportGenerator()
 # Step 1: Generate a scenario prompt
 # feedback_reports = [{"session_id": 1, "issues": ["slow response time", "missed protocol steps"]}]
 email = "new12@gmail.com"
-cursor.execute("SELECT feedback_generated FROM metadata WHERE email = ?", (email,))
-result = cursor.fetchone()
-
+# cursor.execute("SELECT feedback_generated FROM metadata WHERE email = ?", (email,))
+# result = cursor.fetchone()
+result= None
 if result:
     feedback_reports = ast.literal_eval(re.findall(r'{.*?}', result[0], re.DOTALL)[0])['keyphrases_feedback']  # Assuming feedback_generated is the first column in the SELECT query 
 else:
