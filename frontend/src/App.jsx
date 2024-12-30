@@ -13,7 +13,7 @@ import FeedbackModule from "./components/FeedbackModule";
 import ReportingDashboard from "./components/ReportingDashboard";
 import Header from "./components/Header";
 import Signup from "./components/Signup";
-import Login from "./components/login";
+import Login from "./components/Login";
 import { useAppStore } from "./Context/Zustand";
 import ProtectedRoute from "./components/ProtectedRoute";
 
