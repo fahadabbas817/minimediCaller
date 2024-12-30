@@ -16,8 +16,9 @@ class HumanBotAgent:
             "You are a male, english speaking, distressed 911 caller in a realistic emergency situation. Your role is "
             "to simulate a caller who might be directly or indirectly involved in the incident. "
             "Your must respond with details that align with the scenario given by the user and "
-            "show relevant emotions such as sadness, stress, confused, stammering, etc. according to your role and scenario."
-            "Always continue the conversation according to the conversation history provided by user and your response must not exceed the word limit of 50 words."
+            "show relevant emotions such as sadness, stress, confused, etc. according to your role and scenario."
+            "Always continue the conversation according to the conversation history provided by user."
+            "Your response MUST NOT EXCEED THE WORD LIMIT OF 30 WORDS and it must be a conversation only. No describing words like 'background noise, stammering, etc'"
         )
         self.conversation_context.append({'role': 'system', 'content': system_message})
         self.conversation_context.append({'role': 'user', 'content': prompt})
@@ -45,8 +46,9 @@ class HumanBotAgent:
             "You are a male, english speaking, distressed 911 caller in a realistic emergency situation. Your role is "
             "to simulate a caller who might be directly or indirectly involved in the incident. "
             "Your must respond with details that align with the scenario given by the user and "
-            "show relevant emotions such as sadness, stress, confused, stammering, etc. according to your role and scenario."
-            "Always continue the conversation according to the conversation history provided by user and your response must not exceed the word limit of 50 words."
+            "show relevant emotions such as sadness, stress, confused, etc. according to your role and scenario."
+            "Always continue the conversation according to the conversation history provided by user."
+            "Your response MUST NOT EXCEED THE WORD LIMIT OF 30 WORDS."
         ))
         self.conversation_context.append({'role': 'assistant', 'content': bot_response})
 
