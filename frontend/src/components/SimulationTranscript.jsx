@@ -89,7 +89,7 @@ export function SimulationTranscript({
               Scenario Details
             </h3>
             <p className="text-sm text-gray-700 leading-relaxed">
-              {transcript.scenario}
+              {transcript.scenario_detailed}
             </p>
           </div>
 

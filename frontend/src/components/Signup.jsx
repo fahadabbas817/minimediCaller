@@ -6,6 +6,8 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 import { signupService } from '@/api/authApi';
+import { Bars } from 'react-loader-spinner';
+import { toast } from 'sonner';
 
 function Signup() {
 
@@ -13,15 +15,22 @@ const [email, setEmail] = useState('')
   const [name, setname] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
 
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
       const data = await signupService({ email, name, password });
+      setLoading(false)
+     
+        toast.success('Signup successful redirecting to Login')                     
+      
       console.log('Signup successful:', data);
-      navigate('/login')
+      setTimeout(() => {navigate('/login')},2000)
+      
     } catch (err) {
       setError(err.response?.data?.message || 'Signup failed');
       console.log(err)
@@ -74,8 +83,19 @@ const [email, setEmail] = useState('')
               />
             </div>
             {error && <p className="text-red-500">{error}</p>}
-            <Button onClick={handleSignup} type="submit" className="w-full bg-teal-900">
-           Sign Up
+            <Button disabled={loading} onClick={handleSignup} type="submit" className="w-full bg-teal-900">
+         {loading ? (
+                                 <div className="flex items-center">
+                                   <Bars
+                                     height="20"
+                                     width="20"
+                                     color="#CEE2DC"
+                                     ariaLabel="bars-loading"
+                                     wrapperStyle={{}}
+                                     wrapperClass=""
+                                     visible={true}
+                                   />
+                                 </div>):"Sign Up"}
             </Button>
           </form>
           <p className="text-center mt-4">

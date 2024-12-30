@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useAppStore } from "@/Context/Zustand";
+import { toast } from 'sonner';
 
 export const useSpeechRecognition = (onFinalTranscript) => {
   const recognitionRef = useRef(null);
@@ -39,6 +40,7 @@ export const useSpeechRecognition = (onFinalTranscript) => {
         accumulatedTranscript = "";
       } else {
         console.warn("No valid input detected.");
+       toast.error('No valid input detected.')
       }
     };
 
