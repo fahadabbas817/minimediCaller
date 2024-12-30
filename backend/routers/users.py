@@ -111,7 +111,7 @@ def generate_conversation(convers_request:GenerateConversation):
         scenario = convers_request.scenario
         dispatcher_text = convers_request.dispatcher_text
         conv_history = convers_request.conv_history
-        scenario = str(scenario).replace("{", "").replace("}", "").replace("'", "")
+        # scenario = str(scenario).replace("{", "").replace("}", "").replace("'", "")
         bot_response = human_bot_agent.get_bot_response(dispatcher_text, scenario, conv_history)
         return JSONResponse(content=bot_response, status_code=201)
 

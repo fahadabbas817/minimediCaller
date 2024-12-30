@@ -42,8 +42,8 @@ while True:
     if user_input.lower() in ["quit", "exit", "bye"]:
         print("\nEnding conversation...\n")
         break
-
-    bot_response = human_bot_agent.get_bot_response(user_input)
+    conversation_hist = human_bot_agent.get_conversation_logs()
+    bot_response = human_bot_agent.get_bot_response(user_input, scenario=scenario_prompt, conv_history=conversation_hist)
     print("Bot:", bot_response)
 
 # Step 4: Retrieve full conversation logs
