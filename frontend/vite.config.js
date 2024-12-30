@@ -12,14 +12,3 @@ export default defineConfig({
   },
 })
 
-// export default defineConfig({
-//   plugins: [react()],
-//   resolve: {
-//     alias: {
-//       "@": path.resolve(__dirname, "./src"),
-//     },
-//   },
-//   build: {
-//     outDir: 'frontend', // Specify the output directory here
-//   },
-// })

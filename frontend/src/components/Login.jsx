@@ -7,6 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { loginService } from '@/api/authApi';
 import { DispatchContext } from '@/Context/ContextAPI';
 import { useAppStore } from '@/Context/Zustand';
+import { Bars } from 'react-loader-spinner';
+import { toast } from 'sonner';
 function Login() {
     //  const { input, isAuthenticated,setIsAuthenticated, token,setToken,userEmail,setUserEmail } = useContext(DispatchContext);
        const isAuthenticated = useAppStore((state)=>state.isAuthenticated)
@@ -17,6 +19,7 @@ function Login() {
 const [email, setEmail] = useState('')
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
     // useEffect(() => {
     //   // Check localStorage for saved authentication state
@@ -30,16 +33,21 @@ const [email, setEmail] = useState('')
    const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const data = await loginService({ email, password });
       console.log('Login successful:', data);
+              toast.success('Login successful redirecting to Homepage')                     
+           
+      setLoading(false);
       localStorage.setItem('authToken', data.access_token);
       setToken(data.access_token) 
       setUserEmail(email)
       localStorage.setItem('usermail', email);
       setIsAuthenticated(true)
-      navigate('/');
+      setTimeout(() => {navigate('/');},2000)
+      
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      setError(err.response?.message || 'Login failed');
    }
   };
 
@@ -79,8 +87,19 @@ const [email, setEmail] = useState('')
               />
             </div>
             {error && <p className="text-red-500">{error}</p>}
-            <Button onClick={handleLogin} type="submit" className="w-full bg-teal-900">
-              Login
+            <Button   disabled={loading} onClick={handleLogin} type="submit" className="w-full bg-teal-900">
+            {loading ? (
+                        <div className="flex items-center">
+                          <Bars
+                            height="20"
+                            width="20"
+                            color="#CEE2DC"
+                            ariaLabel="bars-loading"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                            visible={true}
+                          />
+                        </div>):"Login"}
             </Button>
           </form>
           <p className="text-center mt-4">
@@ -89,6 +108,7 @@ const [email, setEmail] = useState('')
               variant="link"
               onClick={() => navigate('/signup')}
               className="p-0  font-semibold "
+            
             >
               Sign Up
             </Button>

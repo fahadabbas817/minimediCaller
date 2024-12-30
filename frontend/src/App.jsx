@@ -5,6 +5,7 @@ import {
   Routes,
   
 } from "react-router-dom";
+import { toast,Toaster } from 'sonner'
 
 import Dashboard from "./components/Dashboard";
 import SimulationModule from "./components/SimulationModule";
@@ -12,7 +13,7 @@ import FeedbackModule from "./components/FeedbackModule";
 import ReportingDashboard from "./components/ReportingDashboard";
 import Header from "./components/Header";
 import Signup from "./components/Signup";
-import Login from "./components/Login";
+import Login from "./components/login";
 import { useAppStore } from "./Context/Zustand";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -37,7 +38,9 @@ function App() {
     <Router>
       <div className="flex h-screen bg-gradient-to-br from-blue-100 to-purple-100">
         <main className="flex-1 overflow-y-auto bg-gradient-to-r from-emerald-500 to-emerald-900">
+        <Toaster richColors closeButton position='top-right' />
           {isAuthenticated && <Header />}
+         
           <Routes>
             <Route path="/login" element={<Login />} />
 

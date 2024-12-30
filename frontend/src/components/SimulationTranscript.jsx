@@ -25,7 +25,7 @@ export function SimulationTranscript({
   onEndSimulation
  
 }) {
-// adding commented line
+
   const handleNewBUtton =()=>{
     onEndSimulation()
     setSelectedScenario(!selectedScenario)
@@ -89,7 +89,7 @@ export function SimulationTranscript({
               Scenario Details
             </h3>
             <p className="text-sm text-gray-700 leading-relaxed">
-              {transcript.scenario_brief}
+              {transcript.scenario_detailed}
             </p>
           </div>
 
