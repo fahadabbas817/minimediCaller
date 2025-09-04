@@ -79,6 +79,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      
       {/* Hero Section */}
       <div className=" h-screen  relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-emerald-900/20"></div>

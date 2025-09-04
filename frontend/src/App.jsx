@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
+  useNavigate,
   
 } from "react-router-dom";
 import { toast,Toaster } from 'sonner'
@@ -35,7 +36,7 @@ function App() {
     setIsAuthenticated(!!authToken);
   }, []);
 
-  console.log(isAuthenticated)
+  
   return (
     <Router>
       <>

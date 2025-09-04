@@ -11,7 +11,7 @@ const navLinks = [
   { name: "Log Out", link: "/login" },
 ];
 
-const Header = ({ isAuthenticated }) => {
+export const Header = ({ isAuthenticated }) => {
   const input = useAppStore((state) => state.input);
   const location = useLocation();
 
@@ -21,7 +21,7 @@ const Header = ({ isAuthenticated }) => {
   }
 
   return (
-    <header className={`${isAuthenticated?"bg-gradient-to-r from-emerald-500/90 to-emerald-900/90":"bg-transparent"} w-full fixed top-0 left-0 z-50  backdrop-blur-md`}>
+    <header className={`${isAuthenticated&&location.pathname!=='/'?"bg-gradient-to-r from-emerald-500/90 to-emerald-900/90":"bg-transparent"} w-full fixed top-0 left-0 z-50  backdrop-blur-md`}>
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         
         {/* Logo */}
@@ -30,7 +30,7 @@ const Header = ({ isAuthenticated }) => {
         </h1>
 
         {/* If Authenticated */}
-        {isAuthenticated ? (
+        {isAuthenticated && location.pathname !== "/" ? (
           <>
             {/* Desktop Nav */}
             <nav className="hidden md:flex gap-4 text-gray-100">
