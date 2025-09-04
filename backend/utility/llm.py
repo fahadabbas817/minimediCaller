@@ -30,7 +30,7 @@ def ask_LLM(input_text: str, system_message: str = "You are a helpful and friend
     
     chat_completion = client.chat.completions.create(
         messages=messages,
-        model=os.getenv("LLM_MODEL", "llama-3.2-90b-vision-preview"),
+        model=os.getenv("LLM_MODEL", "llama-3.1-8b-instant"),
         temperature=temperature,
     )
 
