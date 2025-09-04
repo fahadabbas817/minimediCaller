@@ -40,7 +40,7 @@ export function SimulationTranscript({
     <>
    
       <div
-        className="flex justify-between"
+        className="flex justify-between mt-24"
       >
         <h1 className="text-xl md:text-3xl text-gray-200 mb-6 font-semibold">
           Scenario Transcript

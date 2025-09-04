@@ -44,9 +44,11 @@ function SimulationModule() {
   const [loading, setLoading] = useState(false);
   const [convLoading, setConvLoading] = useState(false);
   const [feedbackLoading, setFeedbackLoading] = useState(false);
+ 
 
   const navigate = useNavigate();
   const handleConversationRef = useRef(null);
+
 
   const handleConversation = useCallback(
     async (message) => {

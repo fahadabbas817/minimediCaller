@@ -23,7 +23,7 @@ const SimulationResults = () => {
  const results = reportData
 
   return (
-    <div className="container mx-auto p-4 mt-10 space-y-6">
+    <div className="container mx-auto h-screen p-4 mt-24 space-y-6">
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         {[
           { icon: Brain, label: 'Situation Assessment', value: results.situation_assessment_triage },

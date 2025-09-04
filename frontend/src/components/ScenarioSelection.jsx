@@ -10,9 +10,9 @@ const scenarios = [
 
 export function ScenarioSelection({ onSelect }) {
   return (
-    <div className="flex justify-center mt-20">
+    <div className="flex justify-center mt-20 md:mt-24 h-screen">
       <div className="simulationSelector flex flex-col gap-10  items-start">
-        <h2 className="text-xl font-semibold text-gray-100">
+        <h2 className="text-xl md:text-3xl font-semibold text-gray-100">
           Select Simulation Type
         </h2>
         <div className="flex flex-wrap gap-4">

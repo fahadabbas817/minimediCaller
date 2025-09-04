@@ -19,12 +19,12 @@ function Dashboard() {
   ];
 
   useEffect(() => {
-    isAuthenticated ? navigate("/") : navigate("/login");
+    isAuthenticated ? navigate("/dashboard") : navigate("/login");
   }, []);
   return (
-    <div className="container mx-auto mt-10 space-y-10">
+    <div className="container mx-auto mt-24  h-screen space-y-10">
       <h1 className="text-3xl font-bold text-center text-gray-200">
-        Welcome, Dispatcher
+        🎉Welcome, Dispatcher
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card>
@@ -60,28 +60,7 @@ function Dashboard() {
           <p>Areas for Improvement: Response Time, Protocol Adherence</p>
         </CardContent>
       </Card>
-      <Contributors />
-      <div className="p-4 ">
-        <h2 className="text-3xl font-bold text-center mb-8 text-white">
-          Our Contributors
-        </h2>
-        <div className="sponsor-logos flex flex-wrap justify-center gap-32">
-          {sponsors.map((sponsor, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center gap-4 text-xl text-slate-200"
-            >
-              <img
-                src={sponsor.logo}
-                alt={sponsor.name}
-                className="w-20 h-20 md:w-24 md:h-24 rounded-lg shadow-lg hover:scale-105 transition-transform"
-              />
-
-              <p className="mb-20 ">{sponsor.name}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+    
     </div>
   );
 }
